@@ -1,23 +1,33 @@
 package vampire.city.initial;
 
-import vampire.city.TestJpaConfig;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.test.context.ActiveProfiles;
+
+
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import vampire.city.model.User;
+import vampire.city.repositories.UserRepository;
 
-import javax.transaction.Transactional;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(
-        classes = { TestJpaConfig.class }
-)
-@Transactional
-//@Import(service)
+@ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // Permite usar @BeforeAll não-estático com injeção
 public class BasicServiceTest {
 
+    @Autowired
+    private UserRepository userRepository;
+
+    public static User defaultUser;
+
+    @BeforeAll
+    public void setUp() {
+        if (defaultUser == null) {
+            User newUser = new User("padrão", "teste", true);
+            defaultUser = userRepository.save(newUser);
+        }
+    }
 }

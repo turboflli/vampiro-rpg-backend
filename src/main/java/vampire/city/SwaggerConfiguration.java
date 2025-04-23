@@ -17,7 +17,7 @@ public class SwaggerConfiguration {
     @Bean
     public Docket retornaSwagger() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("listagem.tarefas.controller"))
+                .apis(RequestHandlerSelectors.basePackage("vampire.city.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(informacoesApi());

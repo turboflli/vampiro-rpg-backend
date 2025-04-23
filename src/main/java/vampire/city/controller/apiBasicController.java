@@ -44,7 +44,7 @@ public class apiBasicController {
     @RequestMapping(value="/users", method=RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public User saveUser(@ApiParam(name = "user", example = "{'username': 'login', 'senha': 'password', 'nivel': <String>, 'admin': false}", value = "Json contendo usuário para ser criado")
+    public User saveUser(@ApiParam(name = "user", example = "{'username': 'login', 'senha': 'password',  'gm': false}", value = "Json contendo usuário para ser criado")
                          @RequestBody  Map<String,Object> json, HttpServletRequest request) throws IllegalAccessException {
         this.blockIfLoggedUserIsntGm(request);
         User savedUser;
@@ -61,7 +61,7 @@ public class apiBasicController {
     @RequestMapping(value="/users/{id}", method=RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public User updateUser(@ApiParam(name = "user", example = "{'username': 'login', 'senha': 'password', 'nivel': <String>, 'admin': false}", value = "Json contendo usuário para ser Atualizado, note que não deve passar o id nesse parametro")
+    public User updateUser(@ApiParam(name = "user", example = "{'username': 'login', 'senha': 'password',  'gm': false}", value = "Json contendo usuário para ser Atualizado, note que não deve passar o id nesse parametro")
                            @RequestBody  Map<String,Object> json,
                            @ApiParam(name = "id", example = "2", value = "Id do usuário a ser atualizado") @PathVariable(value = "id") Integer userId, HttpServletRequest request) throws Exception{
         this.blockIfLoggedUserIsntGm(request);

@@ -1,0 +1,289 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+ http://www.liquibase.org/xml/ns/dbchangelog-ext
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="1" author="Lucas">
+
+        <insert tableName="clan">
+            <column name="name" value="Assamita"/>
+            <column name="weakness" value="Ficam cinzentos com tempo, Obsessão com atividade intelectual ou criativa"/>
+            <column name="discipline1" value="Quietus"/>
+            <column name="discipline2" value="Auspex"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Brujah"/>
+            <column name="weakness" value="Facilidade para frenesi, não pode usar von para evitar frenesi"/>
+            <column name="discipline1" value="Potência"/>
+            <column name="discipline2" value="Rapidez"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Cappadocio"/>
+            <column name="weakness" value="Aparência cadavérica, +2 dificuldade em testes pertinentes"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Necromancia"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Gangrel"/>
+            <column name="weakness" value="Ganha características animais ao entrar em frenesi, +1 dificuldade e uma falha automatica pertinentes"/>
+            <column name="discipline1" value="Fortitude"/>
+            <column name="discipline2" value="Animalismo"/>
+            <column name="discipline3" value="Protean"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Lasombra"/>
+            <column name="weakness" value="Sem reflexo ou sombra, dano extra por sol"/>
+            <column name="discipline1" value="Obtenebra"/>
+            <column name="discipline2" value="Dominação"/>
+            <column name="discipline3" value="Potência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Malkavian"/>
+            <column name="weakness" value="Todos são insanos, incuráveis"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Ofuscação"/>
+            <column name="discipline3" value="Demência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Nosferatu"/>
+            <column name="weakness" value="Aparência monstruosa, aparência sempre 0"/>
+            <column name="discipline1" value="Ofuscação"/>
+            <column name="discipline2" value="Animalismo"/>
+            <column name="discipline3" value="Potência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Ravnos"/>
+            <column name="weakness" value="Tem traço de personalidade  que sempre aflora, incapaz de resistir"/>
+            <column name="discipline1" value="Quimerismo"/>
+            <column name="discipline2" value="Animalismo"/>
+            <column name="discipline3" value="Fortitude"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Setitas"/>
+            <column name="weakness" value="2* dano agravado por luz solar"/>
+            <column name="discipline1" value="Serpentis"/>
+            <column name="discipline2" value="Ofuscação"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Toreador"/>
+            <column name="weakness" value="Facínio por beleza"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Rapidez"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Tremere"/>
+            <column name="weakness" value="recebe 2* bond com outro tremere, e precisa deixar um frasco de sangue para o conselho"/>
+            <column name="discipline1" value="Taumaturgia"/>
+            <column name="discipline2" value="Auspex"/>
+            <column name="discipline3" value="Dominação"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Tzimisce"/>
+            <column name="weakness" value="Deve dormir em terra natal"/>
+            <column name="discipline1" value="Vicissitude"/>
+            <column name="discipline2" value="Animalismo"/>
+            <column name="discipline3" value="Auspex"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Ventrue"/>
+            <column name="weakness" value="Só pode se alimentar de um tipo específico de sangue"/>
+            <column name="discipline1" value="Dominação"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Ahrimanes"/>
+            <column name="weakness" value="não pode ter carniçais nem blood bound"/>
+            <column name="discipline1" value="Animalismo"/>
+            <column name="discipline2" value="Potência"/>
+            <column name="discipline3" value="Spiritus"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Anda"/>
+            <column name="weakness" value="1h antes de nascer e uma antes do por, tem dice pool limitado ao valor da Road"/>
+            <column name="discipline1" value="Animalismo"/>
+            <column name="discipline2" value="Potência"/>
+            <column name="discipline3" value="Protean"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Baali"/>
+            <column name="weakness" value="sofrem mais da fé, como se fosse um nível a mais"/>
+            <column name="discipline1" value="Daimonion"/>
+            <column name="discipline2" value="Presenca"/>
+            <column name="discipline3" value="Ofuscação"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Bonsam"/>
+            <column name="weakness" value="assusta mortais coragem 7"/>
+            <column name="discipline1" value="Abombwe"/>
+            <column name="discipline2" value="Ofuscação"/>
+            <column name="discipline3" value="Potência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Danava"/>
+            <column name="weakness" value="não se alimenta de animais, e precisa fazer uma oferenda após se alimentar"/>
+            <column name="discipline1" value="Dominação"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Taumaturgia"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Gargolas"/>
+            <column name="weakness" value="Tem dados pela metade ao se sentir sozinho, von é -2 para dominação mental"/>
+            <column name="discipline1" value="Voo"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Potência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Giovanni"/>
+            <column name="weakness" value="pele pálida, Beijo causa dano"/>
+            <column name="discipline1" value="Necromancia"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Auspex"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Impundulu"/>
+            <column name="weakness" value="só se alimenta de Bomkazi"/>
+            <column name="discipline1" value="Necromancia"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Lamiae"/>
+            <column name="weakness" value="Beijo e sangue adoece os mortais"/>
+            <column name="discipline1" value="Necromancia"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Potência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Lhiannan"/>
+            <column name="weakness" value="ao abraçar aumenta 1 a geração/ -1 dado por semana em areas urbanas"/>
+            <column name="discipline1" value="Animalismo"/>
+            <column name="discipline2" value="Presença"/>
+            <column name="discipline3" value="Ogham"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Nagaraja"/>
+            <column name="weakness" value="Precisa comer carne"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Dominação"/>
+            <column name="discipline3" value="Necromancia"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Niktuku"/>
+            <column name="weakness" value="recupera 1 a cada 3 pontos de sangue por mortal, a cada 100 anos um ponto de aparência vai para um atributo físico"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Rapidez"/>
+            <column name="discipline3" value="Potência"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Ramanga"/>
+            <column name="weakness" value="Aizina e presença para machucar alguém tem +1 dificuldade a menos que tenha um pedaço da vitima"/>
+            <column name="discipline1" value="Aizina"/>
+            <column name="discipline2" value="Ofuscação"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Ramanga"/>
+            <column name="weakness" value="Aizina e presença para machucar alguém tem +1 dificuldade a menos que tenha um pedaço da vitima"/>
+            <column name="discipline1" value="Aizina"/>
+            <column name="discipline2" value="Ofuscação"/>
+            <column name="discipline3" value="Presença"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Salubri Curandeiro"/>
+            <column name="weakness" value="Von 6 para se alimentar não consensual, se falhar deve achar outro ou -2 dados até fim da noite"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Presença"/>
+            <column name="discipline3" value="Valeren"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Salubri Guerreiro"/>
+            <column name="weakness" value="Von 6 para se alimentar de alguém que não derotou em combate, se falhar  -2 dados até fim da noite"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Fortitude"/>
+            <column name="discipline3" value="Valeren"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Salubri Vigias"/>
+            <column name="weakness" value="Escolhe uma area de estudo, Von 6 para resistir oportunidade de estudar, se falhar  -2 dados até fim da noite"/>
+            <column name="discipline1" value="Auspex"/>
+            <column name="discipline2" value="Ofuscação"/>
+            <column name="discipline3" value="Valeren"/>
+        </insert>
+        <insert tableName="clan">
+            <column name="name" value="Brujah Verdadeiro"/>
+            <column name="weakness" value="testes de conscience ou conviction +2 dificuldade (max9) e custam o dobro de xp"/>
+            <column name="discipline1" value="Potência"/>
+            <column name="discipline2" value="Presença"/>
+            <column name="discipline3" value="Temporis"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="2" author="vampire">
+        <insert tableName="road">
+            <column name="name" value="Humanitas"/>
+            <column name="path_name" value="Caminho da Humanidade"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Proteja os inocentes, mantenha sua humanidade"/>
+            <column name="sins" value="Mentir, matar, trair"/>
+            <column name="aura" value="Compaixão"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Via Caeli"/>
+            <column name="path_name" value="Caminho do Céu"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Serviço a Deus, humildade, sacrifício"/>
+            <column name="sins" value="Orgulho, heresia, desonra"/>
+            <column name="aura" value="Fé"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Via Bestiae"/>
+            <column name="path_name" value="Caminho da Besta"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Abrace a besta, rejeite a moral humana"/>
+            <column name="sins" value="Negar seus instintos, hesitar diante da força"/>
+            <column name="aura" value="Fúria"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Via Regalis"/>
+            <column name="path_name" value="Caminho dos Reis"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Domine, comande, imponha ordem"/>
+            <column name="sins" value="Fracasso em liderar, demonstrar fraqueza"/>
+            <column name="aura" value="Orgulho"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Via Osiris"/>
+            <column name="path_name" value="Caminho de Osíris"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Alcance a iluminação através da morte e renascimento"/>
+            <column name="sins" value="Apego material, ignorância espiritual"/>
+            <column name="aura" value="Misticismo"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Via Sin"/>
+            <column name="path_name" value="Caminho do Pecado"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Aceite e cultive seus vícios e desejos"/>
+            <column name="sins" value="Negar prazeres, autocontrole"/>
+            <column name="aura" value="Desejo"/>
+        </insert>
+    </changeSet>
+
+
+ </databaseChangeLog>

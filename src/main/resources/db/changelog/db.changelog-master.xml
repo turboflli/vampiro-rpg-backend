@@ -5,5 +5,7 @@
  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
  http://www.liquibase.org/xml/ns/dbchangelog-ext
  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <!--include file="/vampire/001-.xml" relativeToChangelogFile="true"/-->
+    <include file="/vampire/001-user.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/002-character.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/003-preDefinedOptions.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

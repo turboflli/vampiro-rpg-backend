@@ -1,0 +1,166 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+ http://www.liquibase.org/xml/ns/dbchangelog-ext
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="Lucas">
+        <createTable tableName="character">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="INT"/>
+            <column name="name" type="VARCHAR(80)"/>
+            <column name="clan_id" type="INT"/>
+            <column name="generation" type="INT"/>
+            <column name="sire" type="VARCHAR(80)"/>
+            <column name="nature" type="VARCHAR(50)"/>
+            <column name="demeanor" type="VARCHAR(50)"/>
+            <column name="concept" type="VARCHAR(50)"/>
+
+            <!-- Atributos físicos, sociais e mentais -->
+            <column name="strength" type="INT"/>
+            <column name="dexterity" type="INT"/>
+            <column name="stamina" type="INT"/>
+            <column name="charisma" type="INT"/>
+            <column name="manipulation" type="INT"/>
+            <column name="appearance" type="INT"/>
+            <column name="perception" type="INT"/>
+            <column name="intelligence" type="INT"/>
+            <column name="wits" type="INT"/>
+
+            <!-- Talentos -->
+            <column name="alertness" type="INT"/>
+            <column name="athletics" type="INT"/>
+            <column name="awareness" type="INT"/>
+            <column name="brawl" type="INT"/>
+            <column name="empathy" type="INT"/>
+            <column name="expression" type="INT"/>
+            <column name="intimidation" type="INT"/>
+            <column name="leadership" type="INT"/>
+            <column name="streetwise" type="INT"/>
+            <column name="subterfuge" type="INT"/>
+
+            <!-- Habilidades -->
+            <column name="animal_kin" type="INT"/>
+            <column name="archery" type="INT"/>
+            <column name="crafts" type="INT"/>
+            <column name="etiquette" type="INT"/>
+            <column name="legerdemain" type="INT"/>
+            <column name="melee" type="INT"/>
+            <column name="performance" type="INT"/>
+            <column name="ride" type="INT"/>
+            <column name="stealth" type="INT"/>
+            <column name="survival" type="INT"/>
+
+            <!-- Conhecimentos -->
+            <column name="academics" type="INT"/>
+            <column name="enigmas" type="INT"/>
+            <column name="heart_wisdom" type="INT"/>
+            <column name="investigation" type="INT"/>
+            <column name="law" type="INT"/>
+            <column name="medicine" type="INT"/>
+            <column name="occult" type="INT"/>
+            <column name="politics" type="INT"/>
+            <column name="seneschal" type="INT"/>
+            <column name="theology" type="INT"/>
+
+            <!-- Disciplinas fixas -->
+            <column name="clan_discipline1" type="INT"/>
+            <column name="clan_discipline2" type="INT"/>
+            <column name="clan_discipline3" type="INT"/>
+
+            <!-- Virtudes -->
+            <column name="conscience" type="INT"/>
+            <column name="courage" type="INT"/>
+            <column name="self_control" type="INT"/>
+
+            <!-- Outros -->
+            <column name="road_id" type="INT"/>
+            <column name="road_value" type="INT"/>
+            <column name="willpower" type="INT"/>
+            <column name="bloodpool" type="INT"/>
+            <column name="experience" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Lucas">
+        <createTable tableName="clan">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(50)"/>
+            <column name="weakness" type="TEXT"/>
+            <column name="discipline1" type="VARCHAR(50)"/>
+            <column name="discipline2" type="VARCHAR(50)"/>
+            <column name="discipline3" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Lucas">
+        <createTable tableName="char_discipline">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="score" type="INT"/>
+            <column name="character_id" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="Lucas">
+        <createTable tableName="road">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(50)"/>
+            <column name="path_name" type="VARCHAR(50)"/>
+            <column name="use_conscience" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="use_self_control" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="ethics" type="TEXT"/>
+            <column name="sins" type="TEXT"/>
+            <column name="aura" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="Lucas">
+        <!-- FK: character.user_id -> user.id -->
+        <addForeignKeyConstraint
+                baseTableName="character"
+                baseColumnNames="user_id"
+                constraintName="fk_character_users"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+        <!-- FK: character.road_id -> road.id -->
+        <addForeignKeyConstraint
+                baseTableName="character"
+                baseColumnNames="road_id"
+                constraintName="fk_character_road"
+                referencedTableName="road"
+                referencedColumnNames="id"
+                onDelete="SET NULL"/>
+
+        <!-- FK: character.clan_id -> clan.id -->
+        <addForeignKeyConstraint
+                baseTableName="character"
+                baseColumnNames="clan_id"
+                constraintName="fk_character_clan"
+                referencedTableName="clan"
+                referencedColumnNames="id"
+                onDelete="SET NULL"/>
+
+        <!-- FK: char_discipline.character_id -> character.id -->
+        <addForeignKeyConstraint
+                baseTableName="char_discipline"
+                baseColumnNames="character_id"
+                constraintName="fk_discipline_character"
+                referencedTableName="character"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+
+</databaseChangeLog>

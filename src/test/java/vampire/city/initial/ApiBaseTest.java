@@ -1,6 +1,6 @@
 package vampire.city.initial;
 
-import vampire.city.TestJpaConfig;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,9 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(
-        classes = { TestJpaConfig.class }
-)
 @WebMvcTest(apiBasicController.class)
 @AutoConfigureMockMvc
 @Import(apiBasicController.class)
