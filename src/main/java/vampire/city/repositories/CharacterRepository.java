@@ -11,4 +11,5 @@ import java.util.List;
 public interface CharacterRepository  extends CrudRepository<Character, Integer> {
 
     List<Character> findByUser(@Param("user") User user);
+    List<Character> findByNameNameContainingIgnoreCase(@Param("name") String name);
 }

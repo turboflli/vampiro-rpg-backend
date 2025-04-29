@@ -24,6 +24,10 @@ public class Clan {
         return name;
     }
 
+    public int getId() {
+        return Id;
+    }
+
     public String getWeakness() {
         return weakness;
     }

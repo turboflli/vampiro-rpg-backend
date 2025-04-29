@@ -1,20 +1,24 @@
-package vampire.city.user;
+package vampire.city.character;
 
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 import vampire.city.initial.BasicServiceTest;
 import vampire.city.model.Character;
 import vampire.city.model.Clan;
+import vampire.city.model.Discipline;
 import vampire.city.model.Road;
 import vampire.city.repositories.CharacterRepository;
 import vampire.city.repositories.ClanRepository;
+import vampire.city.repositories.DisciplineRepository;
 import vampire.city.repositories.RoadRepository;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class UserRepositoryTest extends BasicServiceTest {
+
+public class CharacterRepositoryTest extends BasicServiceTest {
 
     @Autowired
     private ClanRepository clanRepository;
@@ -22,21 +26,42 @@ public class UserRepositoryTest extends BasicServiceTest {
     private RoadRepository roadRepository;
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private DisciplineRepository disciplineRepository;
 
     @Test
     public void criarVampiro(){
-        List<Clan> todos = (List<Clan>) this.clanRepository.findAll();
-        System.out.println("Clãs carregados: " + todos.size()); // Debug
-
-        List<Road> todas = (List<Road>) this.roadRepository.findAll();
-        System.out.println("Caminhos carregados: " + todas.size()); // Debug
-
-
         Clan tzimisce = this.clanRepository.findByNameContainingIgnoreCase("Tzimisce").get(0);
         Road pecado = this.roadRepository.findByPathNameContainingIgnoreCase("Pecado").get(0);
         Character vamp1 = this.createVampire("Char 1",tzimisce, pecado );
         vamp1 = this.characterRepository.save(vamp1);
-        Assert.notNull(vamp1.getId());
+        assertNotNull(vamp1.getId());
+    }
+
+    @Test
+    public void criarDisciplina(){
+        Clan tzimisce = this.clanRepository.findByNameContainingIgnoreCase("Tzimisce").get(0);
+        Road pecado = this.roadRepository.findByPathNameContainingIgnoreCase("Pecado").get(0);
+        Character vamp1 = this.createVampire("Char 1",tzimisce, pecado );
+        Discipline protean = new Discipline("protean",1, vamp1);
+        ArrayList<Discipline> disciplinas = new ArrayList<>(Arrays.asList(protean));
+        vamp1.setDisciplines(disciplinas);
+        vamp1 = this.characterRepository.save(vamp1);
+        int numeroDeDisciplinas = this.disciplineRepository.findByCharacter(vamp1).size();
+        assertEquals(1, numeroDeDisciplinas);
+    }
+
+    @Test
+    public void deletarVampiro(){
+        Clan brujah = this.clanRepository.findByNameContainingIgnoreCase("Brujah").get(0);
+        Road rei = this.roadRepository.findByPathNameContainingIgnoreCase("Rei").get(0);
+        Character vamp1 = this.createVampire("Char to Delete",brujah, rei );
+        vamp1 = this.characterRepository.save(vamp1);
+        assertNotNull(vamp1.getId());
+        this.clanRepository.deleteById(vamp1.getId());
+        boolean deletado = this.characterRepository.findByUser(this.defaultUser)
+                .stream().noneMatch(it -> it.getName().equals("Char to Delete"));
+        assertTrue(deletado);
     }
 
     private Character createVampire(String name,Clan clan, Road road){

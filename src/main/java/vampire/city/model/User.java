@@ -67,4 +67,16 @@ public class User {
         if (senha != null ? !senha.equals(user.senha) : user.senha != null) return false;
         return gm != user.gm;
     }
+
+    public User() {
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Id;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + senha.hashCode();
+        result = 31 * result + Boolean.hashCode(gm);
+        return result;
+    }
 }

@@ -48,4 +48,7 @@ public class Discipline {
         this.score = score;
         this.character = character;
     }
+
+    public Discipline() {
+    }
 }

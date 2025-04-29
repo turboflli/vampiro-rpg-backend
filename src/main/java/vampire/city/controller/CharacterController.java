@@ -1,0 +1,92 @@
+package vampire.city.controller;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.SerializationUtils;
+import org.springframework.web.bind.annotation.*;
+import vampire.city.model.CharacterDTO;
+import vampire.city.model.User;
+import vampire.city.repositories.CharacterRepository;
+import vampire.city.repositories.UserRepository;
+import vampire.city.service.CharacterService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping(path="/characters")
+public class CharacterController {
+
+    @Autowired
+    private CharacterService characterService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private CharacterRepository characterRepository;
+
+    @ApiOperation(value = "Endpoint Criar Personagem", notes = "Salva um personagem")
+    @RequestMapping(value="/save", method= RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> saveCharacter(@ApiParam(name = "character", example = "{'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser criado")
+                                               @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
+        User user = this.recoveryUser(request);
+        this.characterService.save(characterdto, user);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Endpoint Criar Personagem", notes = "Atualiza um personagem")
+    @RequestMapping(value="/update", method= RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> updateCharacter(@ApiParam(name = "character", example = "{'id': 1, 'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser atualizado")
+                                           @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
+        if(characterdto.getId() == null){
+            throw new IllegalArgumentException("Personagem precisa ter um id para atualizar");
+        }
+        User user = this.recoveryUser(request);
+        this.characterService.save(characterdto, user);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Endpoint Recuperar Personagem", notes = "Recupera todos os personagens do usuário")
+    @RequestMapping(value="/all", method= RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<CharacterDTO>> getAll(HttpServletRequest request) throws IllegalAccessException {
+        User user = this.recoveryUser(request);
+        return ResponseEntity.ok(this.characterService.getAll(user));
+    }
+
+    @ApiOperation(value = "Endpoint Recuperar Personagem por id", notes = "Cunsulta um personagem pelo id")
+    @RequestMapping(value="/find/{id}", method=RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<CharacterDTO> getById(@ApiParam(name = "id", example = "2", value = "Id do personasgem a ser consultado") @PathVariable(value = "id") Integer id, HttpServletRequest request)  {
+        return ResponseEntity.ok(this.characterService.findById(id));
+
+    }
+
+    @ApiOperation(value = "Endpoint deletar Personagem", notes = "Deleta um personagem já existente.")
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do personagem a ser deletado") @PathVariable(value = "id") Integer id, HttpServletRequest request) {
+        this.characterRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    private User recoveryUser(HttpServletRequest request) throws IllegalAccessException {
+        byte[] data = (byte[]) request.getSession().getAttribute("userId");
+        Integer userId = data != null ? (Integer) SerializationUtils.deserialize(data) : null;
+        if (userId == null) {
+            return this.userRepository.findById(0).get();//Temporariamente até login
+            //throw new IllegalAccessException("Usuário não logado, por favor faça login.");
+        }
+        return this.userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalAccessException("Usuário não encontrado."));
+    }
+
+}

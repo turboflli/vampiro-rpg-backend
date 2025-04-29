@@ -1,231 +1,93 @@
 package vampire.city.model;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Entity(name="character")
-@Table(name="character")
-public class Character {
-
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CharacterDTO {
     private Integer Id;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
-
-    @Column
+    
     private String name;
-    @ManyToOne
-    @JoinColumn(name="clan_id")
-    private Clan clan;
-    @Column
+    private int clanId;
     private int generation;
-    @Column
     private String sire;
-    @Column
     private String nature;
-    @Column
     private String demeanor;
-    @Column
     private String concept;
 
     // Atributos
-    @Column
     private int strength;
-    @Column
     private int dexterity;
-    @Column
     private int stamina;
-    @Column
     private int charisma;
-    @Column
     private int manipulation;
-    @Column
     private int appearance;
-    @Column
     private int perception;
-    @Column
     private int intelligence;
-    @Column
     private int wits;
 
     // Talentos
-    @Column
     private int alertness;
-    @Column
     private int athletics;
-    @Column
     private int awareness;
-    @Column
     private int brawl;
-    @Column
     private int empathy;
-    @Column
     private int expression;
-    @Column
     private int intimidation;
-    @Column
     private int leadership;
-    @Column
     private int streetwise;
-    @Column
     private int subterfuge;
 
     // Habilidades
-    @Column
+    
     private int animal_kin;
-    @Column
     private int archery;
-    @Column
     private int crafts;
-    @Column
     private int etiquette;
-    @Column
     private int legerdemain;
-    @Column
     private int melee;
-    @Column
     private int performance;
-    @Column
     private int ride;
-    @Column
     private int stealth;
-    @Column
     private int survival;
 
     //conhecimentos
-    @Column
+    
     private int academics;
-    @Column
     private int enigmas;
-    @Column
     private int heart_wisdom;
-    @Column
     private int investigation;
-    @Column
     private int law;
-    @Column
     private int medicine;
-    @Column
     private int occult;
-    @Column
     private int politics;
-    @Column
     private int seneschal;
-    @Column
     private int theology;
 
     // Disciplinas (simplificadas)
-    @Column(name = "clan_discipline1")
     private int clanDiscipline1;
-    @Column(name = "clan_discipline2")
     private int clanDiscipline2;
-    @Column(name = "clan_discipline3")
     private int clanDiscipline3;
-    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Discipline> disciplines = new ArrayList<>();
+    private List<DisciplineDTO> disciplines = new ArrayList<>();
 
     // Virtudes
-    @Column
     private int conscience;
-    @Column
     private int courage;
-    @Column
     private int self_control;
 
     // Outros
-    @ManyToOne
-    @JoinColumn(name = "road_id")
-    private Road road;
-    @Column
+    private int roadId;
     private int road_value;
-    @Column
     private int willpower;
-    @Column
     private int bloodpool;
-    @Column
     private int experience;
-
-    public Character() {
-    }
-
-    public Character(User user, String name, Clan clan, int generation, String sire, String nature, String demeanor, String concept, int strength, int dexterity, int stamina, int charisma, int manipulation, int appearance, int perception, int intelligence, int wits, int alertness, int athletics, int awareness, int brawl, int empathy, int expression, int intimidation, int leadership, int streetwise, int subterfuge, int animal_kin, int archery, int crafts, int etiquette, int legerdemain, int melee, int performance, int ride, int stealth, int survival, int academics, int enigmas, int heart_wisdom, int investigation, int law, int medicine, int occult, int politics, int seneschal, int theology, int clanDiscipline1, int clanDiscipline2, int clanDiscipline3, int conscience, int courage, int self_control, Road road, int road_value, int willpower, int bloodpool) {
-        this.user = user;
-        this.name = name;
-        this.clan = clan;
-        this.generation = generation;
-        this.sire = sire;
-        this.nature = nature;
-        this.demeanor = demeanor;
-        this.concept = concept;
-        this.strength = strength;
-        this.dexterity = dexterity;
-        this.stamina = stamina;
-        this.charisma = charisma;
-        this.manipulation = manipulation;
-        this.appearance = appearance;
-        this.perception = perception;
-        this.intelligence = intelligence;
-        this.wits = wits;
-        this.alertness = alertness;
-        this.athletics = athletics;
-        this.awareness = awareness;
-        this.brawl = brawl;
-        this.empathy = empathy;
-        this.expression = expression;
-        this.intimidation = intimidation;
-        this.leadership = leadership;
-        this.streetwise = streetwise;
-        this.subterfuge = subterfuge;
-        this.animal_kin = animal_kin;
-        this.archery = archery;
-        this.crafts = crafts;
-        this.etiquette = etiquette;
-        this.legerdemain = legerdemain;
-        this.melee = melee;
-        this.performance = performance;
-        this.ride = ride;
-        this.stealth = stealth;
-        this.survival = survival;
-        this.academics = academics;
-        this.enigmas = enigmas;
-        this.heart_wisdom = heart_wisdom;
-        this.investigation = investigation;
-        this.law = law;
-        this.medicine = medicine;
-        this.occult = occult;
-        this.politics = politics;
-        this.seneschal = seneschal;
-        this.theology = theology;
-        this.clanDiscipline1 = clanDiscipline1;
-        this.clanDiscipline2 = clanDiscipline2;
-        this.clanDiscipline3 = clanDiscipline3;
-        this.conscience = conscience;
-        this.courage = courage;
-        this.self_control = self_control;
-        this.road = road;
-        this.road_value = road_value;
-        this.willpower = willpower;
-        this.bloodpool = bloodpool;
-    }
 
     public void setId(Integer id) {
         Id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return Id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getName() {
@@ -236,12 +98,12 @@ public class Character {
         this.name = name;
     }
 
-    public Clan getClan() {
-        return clan;
+    public int getClanId() {
+        return clanId;
     }
 
-    public void setClan(Clan clan) {
-        this.clan = clan;
+    public void setClanId(int clanId) {
+        this.clanId = clanId;
     }
 
     public int getGeneration() {
@@ -620,11 +482,11 @@ public class Character {
         this.clanDiscipline3 = clanDiscipline3;
     }
 
-    public List<Discipline> getDisciplines() {
+    public List<DisciplineDTO> getDisciplines() {
         return disciplines;
     }
 
-    public void setDisciplines(List<Discipline> disciplines) {
+    public void setDisciplines(List<DisciplineDTO> disciplines) {
         this.disciplines = disciplines;
     }
 
@@ -652,12 +514,12 @@ public class Character {
         this.self_control = self_control;
     }
 
-    public Road getRoad() {
-        return road;
+    public int getRoadId() {
+        return roadId;
     }
 
-    public void setRoad(Road road) {
-        this.road = road;
+    public void setRoadId(int roadId) {
+        this.roadId = roadId;
     }
 
     public int getRoad_value() {
@@ -690,5 +552,80 @@ public class Character {
 
     public void setExperience(int experience) {
         this.experience = experience;
+    }
+
+    public CharacterDTO() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CharacterDTO that = (CharacterDTO) o;
+        return clanId == that.clanId && generation == that.generation && strength == that.strength && dexterity == that.dexterity && stamina == that.stamina && charisma == that.charisma && manipulation == that.manipulation && appearance == that.appearance && perception == that.perception && intelligence == that.intelligence && wits == that.wits && alertness == that.alertness && athletics == that.athletics && awareness == that.awareness && brawl == that.brawl && empathy == that.empathy && expression == that.expression && intimidation == that.intimidation && leadership == that.leadership && streetwise == that.streetwise && subterfuge == that.subterfuge && animal_kin == that.animal_kin && archery == that.archery && crafts == that.crafts && etiquette == that.etiquette && legerdemain == that.legerdemain && melee == that.melee && performance == that.performance && ride == that.ride && stealth == that.stealth && survival == that.survival && academics == that.academics && enigmas == that.enigmas && heart_wisdom == that.heart_wisdom && investigation == that.investigation && law == that.law && medicine == that.medicine && occult == that.occult && politics == that.politics && seneschal == that.seneschal && theology == that.theology && clanDiscipline1 == that.clanDiscipline1 && clanDiscipline2 == that.clanDiscipline2 && clanDiscipline3 == that.clanDiscipline3 && conscience == that.conscience && courage == that.courage && self_control == that.self_control && roadId == that.roadId && road_value == that.road_value && willpower == that.willpower && bloodpool == that.bloodpool && experience == that.experience && Objects.equals(Id, that.Id) && Objects.equals(name, that.name) && Objects.equals(sire, that.sire) && Objects.equals(nature, that.nature) && Objects.equals(demeanor, that.demeanor) && Objects.equals(concept, that.concept) && Objects.equals(disciplines, that.disciplines);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(Id);
+        result = 31 * result + Objects.hashCode(name);
+        result = 31 * result + clanId;
+        result = 31 * result + generation;
+        result = 31 * result + Objects.hashCode(sire);
+        result = 31 * result + Objects.hashCode(nature);
+        result = 31 * result + Objects.hashCode(demeanor);
+        result = 31 * result + Objects.hashCode(concept);
+        result = 31 * result + strength;
+        result = 31 * result + dexterity;
+        result = 31 * result + stamina;
+        result = 31 * result + charisma;
+        result = 31 * result + manipulation;
+        result = 31 * result + appearance;
+        result = 31 * result + perception;
+        result = 31 * result + intelligence;
+        result = 31 * result + wits;
+        result = 31 * result + alertness;
+        result = 31 * result + athletics;
+        result = 31 * result + awareness;
+        result = 31 * result + brawl;
+        result = 31 * result + empathy;
+        result = 31 * result + expression;
+        result = 31 * result + intimidation;
+        result = 31 * result + leadership;
+        result = 31 * result + streetwise;
+        result = 31 * result + subterfuge;
+        result = 31 * result + animal_kin;
+        result = 31 * result + archery;
+        result = 31 * result + crafts;
+        result = 31 * result + etiquette;
+        result = 31 * result + legerdemain;
+        result = 31 * result + melee;
+        result = 31 * result + performance;
+        result = 31 * result + ride;
+        result = 31 * result + stealth;
+        result = 31 * result + survival;
+        result = 31 * result + academics;
+        result = 31 * result + enigmas;
+        result = 31 * result + heart_wisdom;
+        result = 31 * result + investigation;
+        result = 31 * result + law;
+        result = 31 * result + medicine;
+        result = 31 * result + occult;
+        result = 31 * result + politics;
+        result = 31 * result + seneschal;
+        result = 31 * result + theology;
+        result = 31 * result + clanDiscipline1;
+        result = 31 * result + clanDiscipline2;
+        result = 31 * result + clanDiscipline3;
+        result = 31 * result + Objects.hashCode(disciplines);
+        result = 31 * result + conscience;
+        result = 31 * result + courage;
+        result = 31 * result + self_control;
+        result = 31 * result + roadId;
+        result = 31 * result + road_value;
+        result = 31 * result + willpower;
+        result = 31 * result + bloodpool;
+        result = 31 * result + experience;
+        return result;
     }
 }

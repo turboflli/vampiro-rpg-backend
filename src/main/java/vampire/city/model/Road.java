@@ -24,6 +24,10 @@ public class Road {
     @Column
     private String aura;
 
+    public int getId() {
+        return Id;
+    }
+
     public String getName() {
         return name;
     }
