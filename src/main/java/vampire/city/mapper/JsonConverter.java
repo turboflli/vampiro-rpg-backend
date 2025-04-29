@@ -1,4 +1,4 @@
-package vampire.city.service;
+package vampire.city.mapper;
 
 
 

@@ -4,6 +4,7 @@ package vampire.city.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vampire.city.mapper.JsonConverter;
 import vampire.city.model.User;
 import vampire.city.repositories.UserRepository;
 
