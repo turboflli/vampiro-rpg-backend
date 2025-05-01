@@ -33,6 +33,15 @@ public class CharacterService {
         return characterRepository.save(character);
     }
 
+    public Character update(CharacterDTO dto, User user) {
+        if(dto.getId() == null){
+            throw new IllegalArgumentException("Personagem precisa ter um id para atualizar");
+        }
+        Character character = fromDTO(dto, user);
+        character.setId(dto.getId());
+        return characterRepository.save(character);
+    }
+
     private Character fromDTO(CharacterDTO dto, User user) {
         Clan clan = clanRepository.findById(dto.getClanId())
                 .orElseThrow(() -> new RuntimeException("Clan não encontrado"));

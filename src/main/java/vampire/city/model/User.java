@@ -9,7 +9,7 @@ import java.util.List;
 public class User {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
     @Column(name = "username")
     private String username;
     @Column(name = "senha")
@@ -23,12 +23,12 @@ public class User {
         this.gm = gm;
     }
 
-    public int getId() {
-        return Id;
+    public Integer getId() {
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getUsername() {
@@ -62,7 +62,7 @@ public class User {
 
         User user = (User) o;
 
-        if (Id != user.Id) return false;
+        if (id != user.id) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (senha != null ? !senha.equals(user.senha) : user.senha != null) return false;
         return gm != user.gm;
@@ -73,7 +73,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = Id;
+        int result = id;
         result = 31 * result + username.hashCode();
         result = 31 * result + senha.hashCode();
         result = 31 * result + Boolean.hashCode(gm);

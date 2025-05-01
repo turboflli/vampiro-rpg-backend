@@ -13,8 +13,6 @@ public class CharacterMapper {
 
     public Character fromDTO(CharacterDTO dto, User user, Clan clan, Road road) {
         Character character = new Character();
-
-        character.setId(dto.getId());
         // Dados básicos
         character.setName(dto.getName());
         character.setConcept(dto.getConcept());

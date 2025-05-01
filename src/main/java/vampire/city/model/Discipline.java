@@ -8,7 +8,7 @@ public class Discipline {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private Integer id;
 
     @Column
     private String name;

@@ -10,7 +10,7 @@ public class Character {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -213,11 +213,11 @@ public class Character {
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
-    public int getId() {
-        return Id;
+    public Integer getId() {
+        return id;
     }
 
     public User getUser() {

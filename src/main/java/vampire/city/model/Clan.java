@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Clan {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
 
     @Column
     private String name;
@@ -25,7 +25,7 @@ public class Clan {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public String getWeakness() {

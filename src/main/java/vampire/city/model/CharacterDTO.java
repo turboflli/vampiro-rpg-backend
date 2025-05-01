@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CharacterDTO {
-    private Integer Id;
+    private Integer id;
     
     private String name;
     private int clanId;
@@ -83,11 +83,11 @@ public class CharacterDTO {
     private int experience;
 
     public void setId(Integer id) {
-        Id = id;
+        id = id;
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
@@ -562,12 +562,12 @@ public class CharacterDTO {
         if (o == null || getClass() != o.getClass()) return false;
 
         CharacterDTO that = (CharacterDTO) o;
-        return clanId == that.clanId && generation == that.generation && strength == that.strength && dexterity == that.dexterity && stamina == that.stamina && charisma == that.charisma && manipulation == that.manipulation && appearance == that.appearance && perception == that.perception && intelligence == that.intelligence && wits == that.wits && alertness == that.alertness && athletics == that.athletics && awareness == that.awareness && brawl == that.brawl && empathy == that.empathy && expression == that.expression && intimidation == that.intimidation && leadership == that.leadership && streetwise == that.streetwise && subterfuge == that.subterfuge && animal_kin == that.animal_kin && archery == that.archery && crafts == that.crafts && etiquette == that.etiquette && legerdemain == that.legerdemain && melee == that.melee && performance == that.performance && ride == that.ride && stealth == that.stealth && survival == that.survival && academics == that.academics && enigmas == that.enigmas && heart_wisdom == that.heart_wisdom && investigation == that.investigation && law == that.law && medicine == that.medicine && occult == that.occult && politics == that.politics && seneschal == that.seneschal && theology == that.theology && clanDiscipline1 == that.clanDiscipline1 && clanDiscipline2 == that.clanDiscipline2 && clanDiscipline3 == that.clanDiscipline3 && conscience == that.conscience && courage == that.courage && self_control == that.self_control && roadId == that.roadId && road_value == that.road_value && willpower == that.willpower && bloodpool == that.bloodpool && experience == that.experience && Objects.equals(Id, that.Id) && Objects.equals(name, that.name) && Objects.equals(sire, that.sire) && Objects.equals(nature, that.nature) && Objects.equals(demeanor, that.demeanor) && Objects.equals(concept, that.concept) && Objects.equals(disciplines, that.disciplines);
+        return clanId == that.clanId && generation == that.generation && strength == that.strength && dexterity == that.dexterity && stamina == that.stamina && charisma == that.charisma && manipulation == that.manipulation && appearance == that.appearance && perception == that.perception && intelligence == that.intelligence && wits == that.wits && alertness == that.alertness && athletics == that.athletics && awareness == that.awareness && brawl == that.brawl && empathy == that.empathy && expression == that.expression && intimidation == that.intimidation && leadership == that.leadership && streetwise == that.streetwise && subterfuge == that.subterfuge && animal_kin == that.animal_kin && archery == that.archery && crafts == that.crafts && etiquette == that.etiquette && legerdemain == that.legerdemain && melee == that.melee && performance == that.performance && ride == that.ride && stealth == that.stealth && survival == that.survival && academics == that.academics && enigmas == that.enigmas && heart_wisdom == that.heart_wisdom && investigation == that.investigation && law == that.law && medicine == that.medicine && occult == that.occult && politics == that.politics && seneschal == that.seneschal && theology == that.theology && clanDiscipline1 == that.clanDiscipline1 && clanDiscipline2 == that.clanDiscipline2 && clanDiscipline3 == that.clanDiscipline3 && conscience == that.conscience && courage == that.courage && self_control == that.self_control && roadId == that.roadId && road_value == that.road_value && willpower == that.willpower && bloodpool == that.bloodpool && experience == that.experience && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(sire, that.sire) && Objects.equals(nature, that.nature) && Objects.equals(demeanor, that.demeanor) && Objects.equals(concept, that.concept) && Objects.equals(disciplines, that.disciplines);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(Id);
+        int result = Objects.hashCode(id);
         result = 31 * result + Objects.hashCode(name);
         result = 31 * result + clanId;
         result = 31 * result + generation;
