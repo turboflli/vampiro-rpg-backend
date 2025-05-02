@@ -228,7 +228,7 @@
     </changeSet>
 
 
-    <changeSet id="2" author="vampire">
+    <changeSet id="2" author="Lucas">
         <insert tableName="road">
             <column name="name" value="Humanitas"/>
             <column name="path_name" value="Caminho da Humanidade"/>

@@ -162,5 +162,66 @@
                 onDelete="CASCADE"/>
     </changeSet>
 
+    <changeSet id="6" author="Lucas">
+        <createTable tableName="background">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="score" type="INT"/>
+            <column name="character_id" type="INT"/>
+        </createTable>
+
+        <!-- FK: background.character_id -> character.id -->
+        <addForeignKeyConstraint
+                baseTableName="background"
+                baseColumnNames="character_id"
+                constraintName="fk_background_character"
+                referencedTableName="character"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+    
+    <changeSet id="7" author="Lucas">
+        <createTable tableName="merit">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="score" type="INT"/>
+            <column name="type" type="VARCHAR(50)"/>
+            <column name="character_id" type="INT"/>
+        </createTable>
+
+        <!-- FK: merit.character_id -> character.id -->
+        <addForeignKeyConstraint
+                baseTableName="merit"
+                baseColumnNames="character_id"
+                constraintName="fk_merit_character"
+                referencedTableName="character"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="8" author="Lucas">
+        <createTable tableName="flaw">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="score" type="INT"/>
+            <column name="type" type="VARCHAR(50)"/>
+            <column name="character_id" type="INT"/>
+        </createTable>
+
+        <!-- FK: flaw.character_id -> character.id -->
+        <addForeignKeyConstraint
+                baseTableName="flaw"
+                baseColumnNames="character_id"
+                constraintName="fk_flaw_character"
+                referencedTableName="character"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
 
 </databaseChangeLog>

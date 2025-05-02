@@ -96,6 +96,22 @@ public class CharacterMapper {
 
         character.setDisciplines(disciplinas);
 
+        List<Background> backgrounds = dto.getBackgrounds().stream()
+                .map(b -> new Background(b.getName(), b.getScore(), character))
+                .collect(Collectors.toList());
+
+        character.setBackgrounds(backgrounds);
+
+        List<Merit> merits = dto.getMerits().stream()
+                .map(m -> new Merit(m.getName(), m.getScore(), m.getType(), character))
+                .collect(Collectors.toList());
+        character.setMerits(merits);
+
+        List<Flaw> flaws = dto.getFlaws().stream()
+                .map(f -> new Flaw(f.getName(), f.getScore(), f.getType(), character))
+                .collect(Collectors.toList());
+        character.setFlaws(flaws);
+
         return character;
     }
 
@@ -184,6 +200,22 @@ public class CharacterMapper {
                 .collect(Collectors.toList());
 
         dto.setDisciplines(disciplinas);
+
+        List<BackgroundDTO> backgrounds = entity.getBackgrounds().stream()
+                .map(b -> new BackgroundDTO(b.getName(), b.getScore()))
+                .collect(Collectors.toList());
+
+        dto.setBackgrounds(backgrounds);
+
+        List<MeritDTO> merits = entity.getMerits().stream()
+                .map(m -> new MeritDTO(m.getName(), m.getScore(), m.getType()))
+                .collect(Collectors.toList());
+        dto.setMerits(merits);
+
+        List<FlawDTO> flaws = entity.getFlaws().stream()
+                .map(f -> new FlawDTO(f.getName(), f.getScore(), f.getType()))
+                .collect(Collectors.toList());
+        dto.setFlaws(flaws);
 
         return dto;
     }

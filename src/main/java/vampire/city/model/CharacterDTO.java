@@ -69,6 +69,7 @@ public class CharacterDTO {
     private int clanDiscipline2;
     private int clanDiscipline3;
     private List<DisciplineDTO> disciplines = new ArrayList<>();
+    private List<BackgroundDTO> backgrounds = new ArrayList<>();
 
     // Virtudes
     private int conscience;
@@ -81,6 +82,9 @@ public class CharacterDTO {
     private int willpower;
     private int bloodpool;
     private int experience;
+
+    private List<MeritDTO> merits = new ArrayList<>();
+    private List<FlawDTO> flaws = new ArrayList<>();
 
     public void setId(Integer id) {
         id = id;
@@ -490,6 +494,14 @@ public class CharacterDTO {
         this.disciplines = disciplines;
     }
 
+    public List<BackgroundDTO> getBackgrounds() {
+        return backgrounds;
+    }
+
+    public void setBackgrounds(List<BackgroundDTO> backgrounds) {
+        this.backgrounds = backgrounds;
+    }
+
     public int getConscience() {
         return conscience;
     }
@@ -554,6 +566,22 @@ public class CharacterDTO {
         this.experience = experience;
     }
 
+    public List<MeritDTO> getMerits() {
+        return merits;
+    }
+
+    public void setMerits(List<MeritDTO> merits) {
+        this.merits = merits;
+    }
+
+    public List<FlawDTO> getFlaws() {
+        return flaws;
+    }
+
+    public void setFlaws(List<FlawDTO> flaws) {
+        this.flaws = flaws;
+    }
+
     public CharacterDTO() {
     }
 
@@ -562,7 +590,7 @@ public class CharacterDTO {
         if (o == null || getClass() != o.getClass()) return false;
 
         CharacterDTO that = (CharacterDTO) o;
-        return clanId == that.clanId && generation == that.generation && strength == that.strength && dexterity == that.dexterity && stamina == that.stamina && charisma == that.charisma && manipulation == that.manipulation && appearance == that.appearance && perception == that.perception && intelligence == that.intelligence && wits == that.wits && alertness == that.alertness && athletics == that.athletics && awareness == that.awareness && brawl == that.brawl && empathy == that.empathy && expression == that.expression && intimidation == that.intimidation && leadership == that.leadership && streetwise == that.streetwise && subterfuge == that.subterfuge && animal_kin == that.animal_kin && archery == that.archery && crafts == that.crafts && etiquette == that.etiquette && legerdemain == that.legerdemain && melee == that.melee && performance == that.performance && ride == that.ride && stealth == that.stealth && survival == that.survival && academics == that.academics && enigmas == that.enigmas && heart_wisdom == that.heart_wisdom && investigation == that.investigation && law == that.law && medicine == that.medicine && occult == that.occult && politics == that.politics && seneschal == that.seneschal && theology == that.theology && clanDiscipline1 == that.clanDiscipline1 && clanDiscipline2 == that.clanDiscipline2 && clanDiscipline3 == that.clanDiscipline3 && conscience == that.conscience && courage == that.courage && self_control == that.self_control && roadId == that.roadId && road_value == that.road_value && willpower == that.willpower && bloodpool == that.bloodpool && experience == that.experience && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(sire, that.sire) && Objects.equals(nature, that.nature) && Objects.equals(demeanor, that.demeanor) && Objects.equals(concept, that.concept) && Objects.equals(disciplines, that.disciplines);
+        return clanId == that.clanId && generation == that.generation && strength == that.strength && dexterity == that.dexterity && stamina == that.stamina && charisma == that.charisma && manipulation == that.manipulation && appearance == that.appearance && perception == that.perception && intelligence == that.intelligence && wits == that.wits && alertness == that.alertness && athletics == that.athletics && awareness == that.awareness && brawl == that.brawl && empathy == that.empathy && expression == that.expression && intimidation == that.intimidation && leadership == that.leadership && streetwise == that.streetwise && subterfuge == that.subterfuge && animal_kin == that.animal_kin && archery == that.archery && crafts == that.crafts && etiquette == that.etiquette && legerdemain == that.legerdemain && melee == that.melee && performance == that.performance && ride == that.ride && stealth == that.stealth && survival == that.survival && academics == that.academics && enigmas == that.enigmas && heart_wisdom == that.heart_wisdom && investigation == that.investigation && law == that.law && medicine == that.medicine && occult == that.occult && politics == that.politics && seneschal == that.seneschal && theology == that.theology && clanDiscipline1 == that.clanDiscipline1 && clanDiscipline2 == that.clanDiscipline2 && clanDiscipline3 == that.clanDiscipline3 && conscience == that.conscience && courage == that.courage && self_control == that.self_control && roadId == that.roadId && road_value == that.road_value && willpower == that.willpower && bloodpool == that.bloodpool && experience == that.experience && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(sire, that.sire) && Objects.equals(nature, that.nature) && Objects.equals(demeanor, that.demeanor) && Objects.equals(concept, that.concept) && Objects.equals(disciplines, that.disciplines) && Objects.equals(backgrounds, that.backgrounds) && Objects.equals(merits, that.merits) && Objects.equals(flaws, that.flaws);
     }
 
     @Override
@@ -618,6 +646,7 @@ public class CharacterDTO {
         result = 31 * result + clanDiscipline2;
         result = 31 * result + clanDiscipline3;
         result = 31 * result + Objects.hashCode(disciplines);
+        result = 31 * result + Objects.hashCode(backgrounds);
         result = 31 * result + conscience;
         result = 31 * result + courage;
         result = 31 * result + self_control;
@@ -626,6 +655,8 @@ public class CharacterDTO {
         result = 31 * result + willpower;
         result = 31 * result + bloodpool;
         result = 31 * result + experience;
+        result = 31 * result + Objects.hashCode(merits);
+        result = 31 * result + Objects.hashCode(flaws);
         return result;
     }
 }

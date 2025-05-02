@@ -127,6 +127,14 @@ public class Character {
     private int clanDiscipline3;
     @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Discipline> disciplines = new ArrayList<>();
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Background> backgrounds = new ArrayList<>();
+
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Merit> merits = new ArrayList<>();
+
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Flaw> flaws = new ArrayList<>();
 
     // Virtudes
     @Column
@@ -626,6 +634,30 @@ public class Character {
 
     public void setDisciplines(List<Discipline> disciplines) {
         this.disciplines = disciplines;
+    }
+
+    public List<Background> getBackgrounds() {
+        return backgrounds;
+    }
+
+    public void setBackgrounds(List<Background> backgrounds) {
+        this.backgrounds = backgrounds;
+    }
+
+    public List<Merit> getMerits() {
+        return merits;
+    }
+
+    public void setMerits(List<Merit> merits) {
+        this.merits = merits;
+    }
+
+    public List<Flaw> getFlaws() {
+        return flaws;
+    }
+
+    public void setFlaws(List<Flaw> flaws) {
+        this.flaws = flaws;
     }
 
     public int getConscience() {
