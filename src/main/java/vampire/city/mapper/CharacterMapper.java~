@@ -221,11 +221,13 @@ public class CharacterMapper {
     }
 
     public CharacterSummaryDTO toSummaryDTO(Character entity) {
-        return new CharacterSummaryDTO(
-                entity.getId(),
-                entity.getName(),
-                entity.getClan().getName(),
-                entity.getRoad().getName(),
-                entity.getGeneration());
+    CharacterSummaryDTO characterSummaryDTO = new CharacterSummaryDTO();
+
+    characterSummaryDTO.setId(entity.getId());
+    characterSummaryDTO.setName(entity.getName());
+    characterSummaryDTO.setClanName(entity.getClan().getName());
+    characterSummaryDTO.setRoadName(entity.getRoad().getName() + " - " + entity.getRoad().getPathName());
+    characterSummaryDTO.setGeneration(characterSummaryDTO.getGeneration());
+    return characterSummaryDTO;
     }
 }

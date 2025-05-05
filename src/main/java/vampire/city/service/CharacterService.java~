@@ -64,9 +64,9 @@ public class CharacterService {
         return this.characterMapper.toDTO(character);
     }
 
-    public List<CharacterSummaryDTO> findByName(String name) {
+    public List<CharacterDTO> findByName(String name) {
         List<Character> characters = this.characterRepository.findByNameContainingIgnoreCase(name);
-        return characters.stream().map(p -> this.characterMapper.toSummaryDTO(p))
+        return characters.stream().map(p -> this.characterMapper.toDTO(p))
                 .collect(Collectors.toList());
     }
     

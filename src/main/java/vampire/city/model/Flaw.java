@@ -61,4 +61,7 @@ public class Flaw {
         this.type = type;
         this.character = character;
     }
+
+    public Flaw() {
+    }
 }

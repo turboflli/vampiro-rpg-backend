@@ -2,9 +2,9 @@ package vampire.city.model;
 
 import javax.persistence.*;
 
-@Entity(name = "merit")
-@Table(name = "merit")
-public class Merit {
+@Entity(name = "flaw")
+@Table(name = "flaw")
+public class Flaw {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -55,13 +55,10 @@ public class Merit {
         this.character = character;
     }
 
-    public Merit(String name, int score, TraitType type, Character character) {
+    public Flaw(String name, int score, TraitType type, Character character) {
         this.name = name;
         this.score = score;
         this.type = type;
         this.character = character;
-    }
-
-    public Merit() {
     }
 }

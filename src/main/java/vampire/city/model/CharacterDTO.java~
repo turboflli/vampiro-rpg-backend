@@ -87,7 +87,7 @@ public class CharacterDTO {
     private List<FlawDTO> flaws = new ArrayList<>();
 
     public void setId(Integer id) {
-        this.id = id;
+        id = id;
     }
 
     public Integer getId() {

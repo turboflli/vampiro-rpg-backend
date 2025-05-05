@@ -80,7 +80,7 @@ public class CharacterController {
     @ApiOperation(value = "Endpoint Recuperar Personagem por nome", notes = "Cunsulta um personagem pelo nome")
     @RequestMapping(value="/findByName/{name}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<CharacterSummaryDTO>> getByName(@ApiParam(name = "name", example = "Nome", value = "Nome do personagem a ser consultado") @PathVariable(value = "name") String name, HttpServletRequest request)  {
+    public ResponseEntity<List<CharacterDTO>> getByName(@ApiParam(name = "name", example = "Nome", value = "Nome do personagem a ser consultado") @PathVariable(value = "name") String name, HttpServletRequest request)  {
         return ResponseEntity.ok(this.characterService.findByName(name));
     }
 
