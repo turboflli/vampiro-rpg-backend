@@ -13,7 +13,7 @@ public class CityApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CityApplication.class, args);
-		browse("http://localhost:"+GetPort.port+GetPort.path+"/");
+		//browse("http://localhost:"+GetPort.port+GetPort.path+"/");
 	}
 
 	public static void browse(String url) {

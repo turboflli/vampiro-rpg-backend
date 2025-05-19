@@ -46,6 +46,9 @@ public class CharacterController {
     @ResponseBody
     public ResponseEntity<?> updateCharacter(@ApiParam(name = "character", example = "{'id': 1, 'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser atualizado")
                                            @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
+        if (characterdto.getId() == null) {
+            throw new IllegalArgumentException("Id do personagem não pode ser nulo");
+        }
         User user = this.recoveryUser(request);
         this.characterService.update(characterdto, user);
         return ResponseEntity.ok().build();

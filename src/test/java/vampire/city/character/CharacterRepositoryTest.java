@@ -58,7 +58,7 @@ public class CharacterRepositoryTest extends BasicServiceTest {
         Character vamp1 = this.createVampire("Char to Delete",brujah, rei );
         vamp1 = this.characterRepository.save(vamp1);
         assertNotNull(vamp1.getId());
-        this.clanRepository.deleteById(vamp1.getId());
+        this.characterRepository.deleteById(vamp1.getId());
         boolean deletado = this.characterRepository.findByUser(this.defaultUser)
                 .stream().noneMatch(it -> it.getName().equals("Char to Delete"));
         assertTrue(deletado);

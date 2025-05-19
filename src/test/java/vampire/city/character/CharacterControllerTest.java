@@ -109,7 +109,7 @@ class CharacterControllerTest {
                 .andExpect(status().isOk());
 
         // Verifica se o service foi chamado corretamente
-        Mockito.verify(characterService).save(Mockito.eq(dto), Mockito.eq(user));
+        Mockito.verify(characterService).update(Mockito.eq(dto), Mockito.eq(user));
     }
 
     @Test
