@@ -28,18 +28,18 @@ public class CharacterService {
     @Autowired
     private CharacterMapper characterMapper;
 
-    public Character save(CharacterDTO dto, User user) {
+    public CharacterDTO save(CharacterDTO dto, User user) {
         Character character = fromDTO(dto, user);
-        return characterRepository.save(character);
+        return this.characterMapper.toDTO(characterRepository.save(character));
     }
 
-    public Character update(CharacterDTO dto, User user) {
+    public CharacterDTO update(CharacterDTO dto, User user) {
         if(dto.getId() == null){
             throw new IllegalArgumentException("Personagem precisa ter um id para atualizar");
         }
         Character character = fromDTO(dto, user);
         character.setId(dto.getId());
-        return characterRepository.save(character);
+        return this.characterMapper.toDTO(characterRepository.save(character));
     }
 
     private Character fromDTO(CharacterDTO dto, User user) {

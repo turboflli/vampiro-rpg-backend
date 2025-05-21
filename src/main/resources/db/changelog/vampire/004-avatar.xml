@@ -1,0 +1,38 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+ http://www.liquibase.org/xml/ns/dbchangelog-ext
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="Lucas">
+        <createTable tableName="avatar">
+            <column name="id" type="int">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="avatar_pk"
+                />
+            </column>
+            <column name="hair_color" type="VARCHAR(25)"/>
+            <column name="skin_color" type="VARCHAR(25)"/>
+            <column name="accessory" type="VARCHAR(25)"/>
+            <column name="accessory_color" type="VARCHAR(25)"/>
+            <column name="clothe_color" type="VARCHAR(25)"/>
+            <column name="clothing" type="VARCHAR(25)"/>
+            <column name="eyebrows" type="VARCHAR(25)"/>
+            <column name="top" type="VARCHAR(25)"/>
+            <column name="mouth" type="VARCHAR(25)"/>
+            <column name="facial_hair" type="VARCHAR(25)"/>
+            <column name="eye_color" type="VARCHAR(25)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Lucas">
+        <addForeignKeyConstraint baseColumnNames="id"
+                                 baseTableName="avatar"
+                                 constraintName="avatar_characters_fk"
+                                 referencedTableName="character"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

@@ -8,4 +8,5 @@
     <include file="/vampire/001-user.xml" relativeToChangelogFile="true"/>
     <include file="/vampire/002-character.xml" relativeToChangelogFile="true"/>
     <include file="/vampire/003-preDefinedOptions.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/004-avatar.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.SerializationUtils;
 import org.springframework.web.bind.annotation.*;
+import vampire.city.model.Character;
 import vampire.city.model.CharacterDTO;
 import vampire.city.model.CharacterSummaryDTO;
 import vampire.city.model.User;
@@ -33,25 +34,25 @@ public class CharacterController {
     @RequestMapping(value="/save", method= RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> saveCharacter(@ApiParam(name = "character", example = "{'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser criado")
+    public ResponseEntity<CharacterDTO> saveCharacter(@ApiParam(name = "character", example = "{'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser criado")
                                                @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
         User user = this.recoveryUser(request);
-        this.characterService.save(characterdto, user);
-        return ResponseEntity.ok().build();
+        CharacterDTO character = this.characterService.save(characterdto, user);
+        return ResponseEntity.ok(character);
     }
 
     @ApiOperation(value = "Endpoint Atualizar Personagem", notes = "Atualiza um personagem")
     @RequestMapping(value="/update", method= RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> updateCharacter(@ApiParam(name = "character", example = "{'id': 1, 'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser atualizado")
+    public ResponseEntity<CharacterDTO> updateCharacter(@ApiParam(name = "character", example = "{'id': 1, 'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser atualizado")
                                            @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
         if (characterdto.getId() == null) {
             throw new IllegalArgumentException("Id do personagem não pode ser nulo");
         }
         User user = this.recoveryUser(request);
-        this.characterService.update(characterdto, user);
-        return ResponseEntity.ok().build();
+        CharacterDTO character = this.characterService.update(characterdto, user);
+        return ResponseEntity.ok(character);
     }
 
     @ApiOperation(value = "Endpoint Recuperar Personagem", notes = "Recupera todos os personagens do usuário")
