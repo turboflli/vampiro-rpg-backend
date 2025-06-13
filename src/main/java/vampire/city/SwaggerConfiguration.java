@@ -16,11 +16,12 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket retornaSwagger() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("vampire.city.controller"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(informacoesApi());
+        return new Docket(DocumentationType.OAS_30) // <- troca aqui
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("vampire.city.controller"))
+            .paths(PathSelectors.any())
+            .build()
+            .apiInfo(informacoesApi());
     }
 
     private ApiInfo informacoesApi() {

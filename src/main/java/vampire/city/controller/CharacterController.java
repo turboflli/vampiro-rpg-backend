@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.SerializationUtils;
 import org.springframework.web.bind.annotation.*;
 import vampire.city.model.Character;
@@ -35,8 +36,8 @@ public class CharacterController {
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<CharacterDTO> saveCharacter(@ApiParam(name = "character", example = "{'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser criado")
-                                               @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
-        User user = this.recoveryUser(request);
+                                               @RequestBody CharacterDTO characterdto) throws IllegalAccessException {
+        User user = this.recoveryUser();
         CharacterDTO character = this.characterService.save(characterdto, user);
         return ResponseEntity.ok(character);
     }
@@ -46,11 +47,11 @@ public class CharacterController {
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<CharacterDTO> updateCharacter(@ApiParam(name = "character", example = "{'id': 1, 'name': 'Nome', 'clanId': 15,  'roadId': 12, charisma: 5, disciplines: [{name:'aupex', score:1}]}", value = "Json contendo personagem para ser atualizado")
-                                           @RequestBody CharacterDTO characterdto, HttpServletRequest request) throws IllegalAccessException {
+                                           @RequestBody CharacterDTO characterdto) throws IllegalAccessException {
         if (characterdto.getId() == null) {
             throw new IllegalArgumentException("Id do personagem não pode ser nulo");
         }
-        User user = this.recoveryUser(request);
+        User user = this.recoveryUser();
         CharacterDTO character = this.characterService.update(characterdto, user);
         return ResponseEntity.ok(character);
     }
@@ -59,8 +60,8 @@ public class CharacterController {
     @RequestMapping(value="/all", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<CharacterDTO>> getAll(HttpServletRequest request) throws IllegalAccessException {
-        User user = this.recoveryUser(request);
+    public ResponseEntity<List<CharacterDTO>> getAll() throws IllegalAccessException {
+        User user = this.recoveryUser();
         return ResponseEntity.ok(this.characterService.getAll(user));
     }
 
@@ -68,8 +69,8 @@ public class CharacterController {
     @RequestMapping(value="/summary", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<CharacterSummaryDTO>> getAllSummary(HttpServletRequest request) throws IllegalAccessException {
-        User user = this.recoveryUser(request);
+    public ResponseEntity<List<CharacterSummaryDTO>> getAllSummary() throws IllegalAccessException {
+        User user = this.recoveryUser();
         return ResponseEntity.ok(this.characterService.findSummaryCharacterList(user));
     }
 
@@ -96,15 +97,10 @@ public class CharacterController {
         return ResponseEntity.ok().build();
     }
 
-    private User recoveryUser(HttpServletRequest request) throws IllegalAccessException {
-        byte[] data = (byte[]) request.getSession().getAttribute("userId");
-        Integer userId = data != null ? (Integer) SerializationUtils.deserialize(data) : null;
-        if (userId == null) {
-            return this.userRepository.findById(0).get();//Temporariamente até login
-            //throw new IllegalAccessException("Usuário não logado, por favor faça login.");
-        }
-        return this.userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalAccessException("Usuário não encontrado."));
+    private User recoveryUser() throws IllegalAccessException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        return user;
     }
 
 }

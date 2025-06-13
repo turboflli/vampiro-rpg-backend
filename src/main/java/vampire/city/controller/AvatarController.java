@@ -3,6 +3,7 @@ package vampire.city.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import vampire.city.model.Avatar;
 import vampire.city.repositories.AvatarRepository;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/avatars")
 public class AvatarController {
     

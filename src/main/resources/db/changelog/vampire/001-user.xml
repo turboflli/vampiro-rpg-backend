@@ -35,8 +35,8 @@
     <changeSet id="3" author="Lucas">
         <insert schemaName="public" tableName="users">
             <column name="id" value="0"/>
-            <column name="username" value="narrador"/>
-            <column name="senha" value="65622087f8ee2daf1ea651100e94969c1a9fe309bbe393f2f133c0bf1c7b36d9"/>
+            <column name="username" value="lucas"/>
+            <column name="senha" value="$2a$10$V1s9qKVnpaGS9dLPW6ISGumaK17Womt.0whqID5IvEWOUQxDTIMhi"/>
             <column name="gm" value="true"/>
         </insert>
     </changeSet>
