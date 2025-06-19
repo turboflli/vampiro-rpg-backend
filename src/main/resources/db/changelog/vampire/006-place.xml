@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="cascade">
+        <createTable tableName="place">
+            <column name="id" type="INTEGER">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="x_coordinate" type="FLOAT"/>
+            <column name="y_coordinate" type="FLOAT"/>
+            <column name="image" type="BYTEA"/>
+            <column name="domain_id" type="INTEGER">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="place"
+            baseColumnNames="domain_id"
+            constraintName="fk_place_domain"
+            referencedTableName="domain"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+    </changeSet>
+
+    
+    <changeSet id="2" author="cascade">
+        <addColumn tableName="place" >
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint
+            baseTableName="place"
+            baseColumnNames="user_id"
+            constraintName="fk_place_user"
+            referencedTableName="users"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+    </changeSet>
+
+    
+    <changeSet id="3" author="cascade">
+        <createTable tableName="subplace">
+            <column name="id" type="INTEGER">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="place_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="subplace"
+            baseColumnNames="place_id"
+            constraintName="fk_subplace_place"
+            referencedTableName="place"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+    </changeSet>
+    
+
+</databaseChangeLog>

@@ -285,5 +285,153 @@
         </insert>
     </changeSet>
 
+    <changeSet id="3" author="Lucas">
+        <insert tableName="road">
+            <column name="name" value="Path of the Hunter"/>
+            <column name="path_name" value="Caminho do Caçador"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Domine a selva, seja o predador supremo"/>
+            <column name="sins" value="Vacilar na caça, mostrar misericórdia"/>
+            <column name="aura" value="Fúria"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Journeys"/>
+            <column name="path_name" value="Caminho das Jornadas"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Abrace o nomadismo, descubra a si mesmo"/>
+            <column name="sins" value="Estagnação, negação da jornada pessoal"/>
+            <column name="aura" value="Curiosidade"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Liberation"/>
+            <column name="path_name" value="Caminho da Libertação"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Liberte-se das correntes, rejeite as leis humanas"/>
+            <column name="sins" value="Submissão, aceitação da opressão"/>
+            <column name="aura" value="Liberdade"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Breath"/>
+            <column name="path_name" value="Caminho do Sopro"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Valorize a vida, respire como os mortais"/>
+            <column name="sins" value="Desrespeitar a vida, causar sofrimento sem necessidade"/>
+            <column name="aura" value="Empatia"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Community"/>
+            <column name="path_name" value="Caminho da Comunidade"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Serviço aos outros, viver em harmonia"/>
+            <column name="sins" value="Isolamento, egoísmo"/>
+            <column name="aura" value="Solidariedade"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Illumination"/>
+            <column name="path_name" value="Caminho da Iluminação"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Busca pelo conhecimento, iluminação espiritual"/>
+            <column name="sins" value="Ignorância voluntária, rejeitar o aprendizado"/>
+            <column name="aura" value="Clareza"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Derech Lilit"/>
+            <column name="path_name" value="Caminho de Lilith"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Aceite o poder das trevas, cultive o mistério"/>
+            <column name="sins" value="Negar o poder interior, revelar segredos"/>
+            <column name="aura" value="Mistério"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Thorns"/>
+            <column name="path_name" value="Caminho dos Espinhos"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Sofra para crescer, cause dor para ensinar"/>
+            <column name="sins" value="Fugir do sofrimento, evitar o sacrifício"/>
+            <column name="aura" value="Resiliência"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Veils"/>
+            <column name="path_name" value="Caminho dos Véus"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Esconda-se, manipule através da ilusão"/>
+            <column name="sins" value="Revelar a verdade, agir abertamente"/>
+            <column name="aura" value="Engano"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Making"/>
+            <column name="path_name" value="Caminho da Criação"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Crie, transforme, modele o mundo"/>
+            <column name="sins" value="Destruição sem propósito, estagnação criativa"/>
+            <column name="aura" value="Engenhosidade"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Via Mutationis"/>
+            <column name="path_name" value="Caminho da Metamorfose"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Transcenda a forma, abrace a mutação"/>
+            <column name="sins" value="Permanecer inalterado, resistir à evolução"/>
+            <column name="aura" value="Mutação"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Pleasure"/>
+            <column name="path_name" value="Caminho do Prazer"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Busque prazer, celebre os sentidos"/>
+            <column name="sins" value="Reprimir desejos, negar indulgência"/>
+            <column name="aura" value="Sedução"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of the Devil"/>
+            <column name="path_name" value="Caminho do Diabo"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Aja com desafio, abrace o caos e a provocação"/>
+            <column name="sins" value="Obediência cega, subserviência"/>
+            <column name="aura" value="Desafio"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="Path of Screams"/>
+            <column name="path_name" value="Caminho dos Gritos"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="false"/>
+            <column name="ethics" value="Alimente-se do sofrimento, ouça os gritos da alma"/>
+            <column name="sins" value="Evitar a dor, ignorar o medo alheio"/>
+            <column name="aura" value="Terror"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="The Road of Bones"/>
+            <column name="path_name" value="Caminho dos Ossos"/>
+            <column name="use_conscience" valueBoolean="false"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Compreenda a morte, aprenda com os mortos"/>
+            <column name="sins" value="Desrespeitar os mortos, temer a morte"/>
+            <column name="aura" value="Morbidez"/>
+        </insert>
+        <insert tableName="road">
+            <column name="name" value="The Road of Yasa"/>
+            <column name="path_name" value="Caminho de Yasa"/>
+            <column name="use_conscience" valueBoolean="true"/>
+            <column name="use_self_control" valueBoolean="true"/>
+            <column name="ethics" value="Siga a lei do império, preserve a ordem mongol"/>
+            <column name="sins" value="Desobediência às leis, traição ao khaganato"/>
+            <column name="aura" value="Dever"/>
+        </insert>
+    </changeSet>
+
+
 
  </databaseChangeLog>

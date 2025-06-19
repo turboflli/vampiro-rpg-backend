@@ -9,4 +9,7 @@
     <include file="/vampire/002-character.xml" relativeToChangelogFile="true"/>
     <include file="/vampire/003-preDefinedOptions.xml" relativeToChangelogFile="true"/>
     <include file="/vampire/004-avatar.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/005-domain.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/006-place.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/007-routine.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

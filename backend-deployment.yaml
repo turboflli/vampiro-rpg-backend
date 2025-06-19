@@ -24,3 +24,5 @@ spec:
               value: vamuser
             - name: SPRING_DATASOURCE_PASSWORD
               value: vampass
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s

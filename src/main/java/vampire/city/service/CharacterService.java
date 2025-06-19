@@ -11,7 +11,6 @@ import vampire.city.repositories.RoadRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 

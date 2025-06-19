@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.SerializationUtils;
 import org.springframework.web.bind.annotation.*;
-import vampire.city.model.Character;
+
+import vampire.city.RabbitMQ.NpcProducer;
 import vampire.city.model.CharacterDTO;
 import vampire.city.model.CharacterSummaryDTO;
 import vampire.city.model.User;
@@ -31,6 +31,12 @@ public class CharacterController {
     @Autowired
     private CharacterRepository characterRepository;
 
+    private final NpcProducer producer;
+
+    public CharacterController(NpcProducer producer) {
+        this.producer = producer;
+    }
+
     @ApiOperation(value = "Endpoint Criar Personagem", notes = "Salva um personagem")
     @RequestMapping(value="/save", method= RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +45,7 @@ public class CharacterController {
                                                @RequestBody CharacterDTO characterdto) throws IllegalAccessException {
         User user = this.recoveryUser();
         CharacterDTO character = this.characterService.save(characterdto, user);
+        this.producer.sendNpcEvent("Personagem criado: " + characterdto.getName());
         return ResponseEntity.ok(character);
     }
 
@@ -53,6 +60,7 @@ public class CharacterController {
         }
         User user = this.recoveryUser();
         CharacterDTO character = this.characterService.update(characterdto, user);
+        this.producer.sendNpcEvent("Personagem atualizado: " + characterdto.getName());
         return ResponseEntity.ok(character);
     }
 
@@ -77,7 +85,7 @@ public class CharacterController {
     @ApiOperation(value = "Endpoint Recuperar Personagem por id", notes = "Cunsulta um personagem pelo id")
     @RequestMapping(value="/find/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<CharacterDTO> getById(@ApiParam(name = "id", example = "2", value = "Id do personasgem a ser consultado") @PathVariable(value = "id") Integer id, HttpServletRequest request)  {
+    public ResponseEntity<CharacterDTO> getById(@ApiParam(name = "id", example = "2", value = "Id do personasgem a ser consultado") @PathVariable(value = "id") Integer id)  {
         return ResponseEntity.ok(this.characterService.findById(id));
 
     }
@@ -85,15 +93,16 @@ public class CharacterController {
     @ApiOperation(value = "Endpoint Recuperar Personagem por nome", notes = "Cunsulta um personagem pelo nome")
     @RequestMapping(value="/findByName/{name}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<CharacterSummaryDTO>> getByName(@ApiParam(name = "name", example = "Nome", value = "Nome do personagem a ser consultado") @PathVariable(value = "name") String name, HttpServletRequest request)  {
+    public ResponseEntity<List<CharacterSummaryDTO>> getByName(@ApiParam(name = "name", example = "Nome", value = "Nome do personagem a ser consultado") @PathVariable(value = "name") String name)  {
         return ResponseEntity.ok(this.characterService.findByName(name));
     }
 
     @ApiOperation(value = "Endpoint deletar Personagem", notes = "Deleta um personagem já existente.")
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do personagem a ser deletado") @PathVariable(value = "id") Integer id, HttpServletRequest request) {
+    public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do personagem a ser deletado") @PathVariable(value = "id") Integer id) {
         this.characterRepository.deleteById(id);
+        this.producer.sendNpcEvent("Personagem deletado: " + id);
         return ResponseEntity.ok().build();
     }
 

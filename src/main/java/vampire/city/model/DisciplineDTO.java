@@ -1,6 +1,5 @@
 package vampire.city.model;
 
-import javax.persistence.Column;
 import java.util.Objects;
 
 public class DisciplineDTO {
