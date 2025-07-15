@@ -74,4 +74,10 @@ public class CharacterService {
         return characters.stream().map(p -> this.characterMapper.toSummaryDTO(p))
                 .collect(Collectors.toList());
     }
+
+    public CharacterSummaryDTO findSummaryCharacter(Integer id) {
+        Character character = this.characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Personagem não encontrado"));
+        return this.characterMapper.toSummaryDTO(character);
+    }
 }

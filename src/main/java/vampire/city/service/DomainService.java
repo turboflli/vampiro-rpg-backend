@@ -65,4 +65,16 @@ public class DomainService {
         return domains.stream().map(p -> this.domainMapper.toDTO(p))
                 .collect(Collectors.toList());
     }
+
+    public DomainDTO findById(Integer id) {
+        Domain domain = this.domainRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Dominio nao encontrado"));
+        return this.domainMapper.toDTO(domain);
+    }
+
+    public List<Integer> getCharacterIds() {
+        return this.domainRepository.findAll().stream()
+                .map(p -> p.getCharacter().getId())
+                .collect(Collectors.toList());
+    }
 }

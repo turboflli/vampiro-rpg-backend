@@ -5,9 +5,9 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1" author="cascade">
+    <changeSet id="1" author="lucas">
         <createTable tableName="place">
-            <column name="id" type="INTEGER">
+            <column name="id" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
@@ -46,9 +46,9 @@
     </changeSet>
 
     
-    <changeSet id="3" author="cascade">
-        <createTable tableName="subplace">
-            <column name="id" type="INTEGER">
+    <changeSet id="3" author="lucas">
+        <createTable tableName="sub_place">
+            <column name="id" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
@@ -59,13 +59,30 @@
         </createTable>
 
         <addForeignKeyConstraint
-            baseTableName="subplace"
+            baseTableName="sub_place"
             baseColumnNames="place_id"
-            constraintName="fk_subplace_place"
+            constraintName="fk_sub_place_place"
             referencedTableName="place"
             referencedColumnNames="id"
             onDelete="CASCADE"/>
     </changeSet>
+
+    <changeSet id="4" author="lucas">
+        <addColumn tableName="place" >
+            <column name="type" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
     
+    <changeSet id="5" author="lucas">
+        <dropColumn tableName="place" columnName="image"/>
+
+        <addColumn tableName="place">
+            <column name="image" type="VARCHAR(500)"/>
+        </addColumn>
+    </changeSet>
+
+
 
 </databaseChangeLog>

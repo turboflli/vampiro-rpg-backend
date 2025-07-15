@@ -69,4 +69,10 @@ public class PlaceService {
         return places.stream().map(p -> this.placeMapper.toDTO(p))
                 .collect(Collectors.toList());
     }
+
+    public PlaceDTO findById(Integer id) {
+        Place place = this.placeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Lugar nao encontrado"));
+        return this.placeMapper.toDTO(place);
+    }
 }

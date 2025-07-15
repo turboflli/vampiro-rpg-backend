@@ -69,6 +69,14 @@ public class PlaceController {
         return ResponseEntity.ok(this.placeService.findByUser(user));
     }
 
+    @ApiOperation(value = "Endpoint Recuperar Lugar por id", notes = "Recupera um lugar pelo id")
+    @RequestMapping(value="/find/{id}", method= RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<PlaceDTO> getPlaceById(@ApiParam(name = "id", example = "1", value = "Id do lugar") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
+        return ResponseEntity.ok(this.placeService.findById(id));
+    }
+
     @ApiOperation(value = "Endpoint Recuperar Lugar por domainId", notes = "Recupera todos os lugares do dominio")
     @RequestMapping(value="/domain/{domainId}", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -78,7 +86,7 @@ public class PlaceController {
     }
 
     @ApiOperation(value = "Endpoint Recuperar Lugar por nome", notes = "Recupera todos os lugares com o nome contendo o texto digitado")
-    @RequestMapping(value="/name/{name}", method= RequestMethod.GET,
+    @RequestMapping(value="/findByName/{name}", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<PlaceDTO>> getPlacesByName(@ApiParam(name = "name", example = "Nome", value = "Nome do lugar para buscar") @PathVariable(value = "name") String name) throws IllegalAccessException {

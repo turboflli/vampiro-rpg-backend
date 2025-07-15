@@ -9,19 +9,26 @@ public class PlaceDTO {
     private String description;
     private float x_coordinate;
     private float y_coordinate;
-    private byte[] image;
+
+    private String image;
+    private String type;
     private Integer domainId;
     private List<SubPlaceDTO> subPlaces;
 
-    public PlaceDTO(Integer id, String name, String description, float x_coordinate, float y_coordinate, byte[] image, Integer domain_id, List<SubPlaceDTO> subPlaces) {
+    public PlaceDTO(Integer id, String name, String description, float x_coordinate, float y_coordinate, String image, String type, Integer domain_id, List<SubPlaceDTO> subPlaces) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.type = type;
         this.x_coordinate = x_coordinate;
         this.y_coordinate = y_coordinate;
         this.image = image;
         this.domainId = domain_id;
         this.subPlaces = subPlaces;
+    }
+
+    public PlaceDTO() {
+        //TODO Auto-generated constructor stub
     }
 
     public Integer getId() {
@@ -64,12 +71,20 @@ public class PlaceDTO {
         this.y_coordinate = y_coordinate;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Integer getDomainId() {
@@ -100,6 +115,7 @@ public class PlaceDTO {
         if (!Objects.equals(description, placeDTO.description)) return false;
         if (!Objects.equals(x_coordinate, placeDTO.x_coordinate)) return false;
         if (!Objects.equals(y_coordinate, placeDTO.y_coordinate)) return false;
+        if (!Objects.equals(type, placeDTO.type)) return false;
         if (!Objects.equals(image, placeDTO.image)) return false;
         if (!Objects.equals(domainId, placeDTO.domainId)) return false;
         if (!Objects.equals(subPlaces, placeDTO.subPlaces)) return false;

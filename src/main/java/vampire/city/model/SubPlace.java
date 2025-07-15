@@ -19,8 +19,7 @@ public class SubPlace {
         //TODO Auto-generated constructor stub
     }
 
-    public SubPlace(Integer id, String name, String description, Place place) {
-        this.id = id;
+    public SubPlace(String name, String description, Place place) {
         this.name = name;
         this.description = description;
         this.place = place;

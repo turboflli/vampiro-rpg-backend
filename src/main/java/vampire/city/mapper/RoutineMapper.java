@@ -2,11 +2,13 @@ package vampire.city.mapper;
 
 import java.time.LocalTime;
 
+import org.springframework.stereotype.Component;
+
 import vampire.city.model.Place;
 import vampire.city.model.Routine;
 import vampire.city.model.RoutineDTO;
 import vampire.city.model.Character;
-
+@Component
 public class RoutineMapper {
 
     public RoutineDTO toDTO(Routine routine) {

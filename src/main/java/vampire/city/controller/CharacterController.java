@@ -45,7 +45,7 @@ public class CharacterController {
                                                @RequestBody CharacterDTO characterdto) throws IllegalAccessException {
         User user = this.recoveryUser();
         CharacterDTO character = this.characterService.save(characterdto, user);
-        this.producer.sendNpcEvent("Personagem criado: " + characterdto.getName());
+        this.sendNpcEvent("Personagem criado: " + characterdto.getName());
         return ResponseEntity.ok(character);
     }
 
@@ -60,7 +60,7 @@ public class CharacterController {
         }
         User user = this.recoveryUser();
         CharacterDTO character = this.characterService.update(characterdto, user);
-        this.producer.sendNpcEvent("Personagem atualizado: " + characterdto.getName());
+        this.sendNpcEvent("Personagem atualizado: " + characterdto.getName());
         return ResponseEntity.ok(character);
     }
 
@@ -80,6 +80,14 @@ public class CharacterController {
     public ResponseEntity<List<CharacterSummaryDTO>> getAllSummary() throws IllegalAccessException {
         User user = this.recoveryUser();
         return ResponseEntity.ok(this.characterService.findSummaryCharacterList(user));
+    }
+
+    @ApiOperation(value = "Endpoint Recuperar Resumo de um Personagem", notes = "Recupera apenas nome, clã, caminho e geração de um personagem")
+    @RequestMapping(value="/summary/{id}", method= RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<CharacterSummaryDTO> getSummaryById(@ApiParam(name = "id", example = "2", value = "Id do personasgem a ser consultado") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
+        return ResponseEntity.ok(this.characterService.findSummaryCharacter(id));
     }
 
     @ApiOperation(value = "Endpoint Recuperar Personagem por id", notes = "Cunsulta um personagem pelo id")
@@ -102,8 +110,16 @@ public class CharacterController {
     @ResponseBody
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do personagem a ser deletado") @PathVariable(value = "id") Integer id) {
         this.characterRepository.deleteById(id);
-        this.producer.sendNpcEvent("Personagem deletado: " + id);
+        this.sendNpcEvent("Personagem deletado: " + id);
         return ResponseEntity.ok().build();
+    }
+
+    private void sendNpcEvent(String message) {
+        try {
+            this.producer.sendNpcEvent(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private User recoveryUser() throws IllegalAccessException {

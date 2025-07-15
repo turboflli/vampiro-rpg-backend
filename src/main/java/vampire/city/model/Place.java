@@ -14,7 +14,8 @@ public class Place {
     private String description;
     private float x_coordinate;
     private float y_coordinate;
-    private byte[] image;
+    private String image;
+    private String type;
     @ManyToOne
     @JoinColumn(name = "domain_id")
     private Domain domain;
@@ -24,7 +25,7 @@ public class Place {
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubPlace> subPlaces;
 
-    public Place(String name, String description, float x_coordinate, float y_coordinate, byte[] image, Domain domain, User user, List<SubPlace> subPlaces) {
+    public Place(String name, String description, float x_coordinate, float y_coordinate, String image, Domain domain, User user, List<SubPlace> subPlaces) {
         this.name = name;
         this.description = description;
         this.x_coordinate = x_coordinate;
@@ -79,12 +80,20 @@ public class Place {
         this.y_coordinate = y_coordinate;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Domain getDomain() {
@@ -125,6 +134,7 @@ public class Place {
         if (!Objects.equals(y_coordinate, place.y_coordinate)) return false;
         if (!Objects.equals(image, place.image)) return false;
         if (!Objects.equals(domain, place.domain)) return false;
+        if (!Objects.equals(type, place.type)) return false;
         if (!Objects.equals(user, place.user)) return false;
         return Objects.equals(subPlaces, place.subPlaces);
     }
@@ -138,6 +148,7 @@ public class Place {
         result = 31 * result + Float.hashCode(y_coordinate);
         result = 31 * result + (image != null ? image.hashCode() : 0);
         result = 31 * result + (domain != null ? domain.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (subPlaces != null ? subPlaces.hashCode() : 0);
         return result;
