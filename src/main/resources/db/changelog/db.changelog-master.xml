@@ -12,4 +12,5 @@
     <include file="/vampire/005-domain.xml" relativeToChangelogFile="true"/>
     <include file="/vampire/006-place.xml" relativeToChangelogFile="true"/>
     <include file="/vampire/007-routine.xml" relativeToChangelogFile="true"/>
+    <include file="/vampire/008-blocks.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

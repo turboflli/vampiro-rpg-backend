@@ -31,11 +31,8 @@ public class CharacterController {
     @Autowired
     private CharacterRepository characterRepository;
 
-    private final NpcProducer producer;
-
-    public CharacterController(NpcProducer producer) {
-        this.producer = producer;
-    }
+    @Autowired(required = false)
+    private NpcProducer producer;
 
     @ApiOperation(value = "Endpoint Criar Personagem", notes = "Salva um personagem")
     @RequestMapping(value="/save", method= RequestMethod.POST,

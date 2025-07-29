@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+    <changeSet id="h2-geometry-type" author="lucas" dbms="h2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(*) FROM INFORMATION_SCHEMA.DOMAINS WHERE DOMAIN_NAME = 'GEOMETRY'
+                </sqlCheck>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE DOMAIN geometry AS VARCHAR;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1" author="lucas">
+        
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <sql>CREATE EXTENSION IF NOT EXISTS postgis;</sql>
+    </changeSet>
+    <changeSet id="2" author="lucas">
+     
+        <sql>
+            CREATE TABLE blocks (
+                id SERIAL PRIMARY KEY,
+                shape GEOMETRY(POLYGON, 4326) NOT NULL,
+                color varchar(7) default '#777777'
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="cascade">
+        <addColumn tableName="blocks" >
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint
+            baseTableName="blocks"
+            baseColumnNames="user_id"
+            constraintName="fk_blocks_user"
+            referencedTableName="users"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+    </changeSet>
+
+
+</databaseChangeLog>
