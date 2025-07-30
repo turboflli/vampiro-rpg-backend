@@ -10,7 +10,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.springframework.stereotype.Component;
 
 import vampire.city.model.Blocks;
-import vampire.city.model.BlockDTO;
+import vampire.city.model.BlocksDTO;
 import vampire.city.model.User;
 
 @Component
@@ -19,23 +19,23 @@ public class BlockMapper {
     private static final GeometryFactory factory = new GeometryFactory();
 
 
-    public BlockDTO toDTO(Blocks block) {
-        BlockDTO blockDTO = new BlockDTO();
-        blockDTO.setId(block.getId());
+    public BlocksDTO toDTO(Blocks block) {
+        BlocksDTO BlocksDTO = new BlocksDTO();
+        BlocksDTO.setId(block.getId());
         List<List<Integer>> coordinates = new ArrayList<>();
         for (Coordinate c : block.getShape().getCoordinates()) {
             coordinates.add(List.of((int) c.getY(), (int) c.getX()));
         }
-        blockDTO.setCoordinates(coordinates);
-        blockDTO.setColor(block.getColor());
-        return blockDTO;
+        BlocksDTO.setCoordinates(coordinates);
+        BlocksDTO.setColor(block.getColor());
+        return BlocksDTO;
     }
 
-    public Blocks fromDTO(BlockDTO blockDTO, User user) {
+    public Blocks fromDTO(BlocksDTO BlocksDTO, User user) {
         Blocks block = new Blocks();
-        block.setId(blockDTO.getId());
-        block.setShape(toPolygon(blockDTO.getCoordinates()));
-        block.setColor(blockDTO.getColor());
+        block.setId(BlocksDTO.getId());
+        block.setShape(toPolygon(BlocksDTO.getCoordinates()));
+        block.setColor(BlocksDTO.getColor());
         block.setUser(user);
         return block;
     }

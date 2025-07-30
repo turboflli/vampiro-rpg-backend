@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import vampire.city.model.BlockDTO;
+import vampire.city.RabbitMQ.PlaceEvents;
+import vampire.city.RabbitMQ.PlaceProducer;
+import vampire.city.model.BlocksDTO;
 import vampire.city.model.User;
 import vampire.city.repositories.BlocksRepository;
 import vampire.city.repositories.UserRepository;
@@ -30,21 +34,26 @@ public class BlocksController {
     private UserRepository userRepository;    
     @Autowired
     private BlocksRepository blocksRepository;    
+    @Autowired(required = false)
+    private PlaceProducer producer;
+    
     
     @ApiOperation(value = "Endpoint Criar Bloco", notes = "Salva um bloco")
     @RequestMapping(value="/save", method= RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<BlockDTO> save(@RequestBody BlockDTO dto) throws IllegalAccessException {
+    public ResponseEntity<BlocksDTO> save(@RequestBody BlocksDTO dto) throws IllegalAccessException {
         User user = this.recoveryUser();
-        return ResponseEntity.ok(blocksService.save(dto, user));
+        dto = blocksService.save(dto, user);
+        this.sendBlockEvent(PlaceEvents.CREATE_BLOCKS, dto.getId());
+        return ResponseEntity.ok(dto);
     }
 
     @ApiOperation(value = "Endpoint Recuperar Blocos", notes = "Recupera todos os blocos do usuário")
     @RequestMapping(value="/all", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<BlockDTO>> findByUser() throws IllegalAccessException {
+    public ResponseEntity<List<BlocksDTO>> findByUser() throws IllegalAccessException {
         User user = this.recoveryUser();
         return ResponseEntity.ok(blocksService.findByUser(user));
     }
@@ -55,6 +64,14 @@ public class BlocksController {
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do bloco a ser deletado") @PathVariable(value = "id") Integer id) {
         this.blocksRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    private void sendBlockEvent(PlaceEvents event, Integer id) {
+        try {
+            this.producer.sendBlockEvent(event, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private User recoveryUser() throws IllegalAccessException {

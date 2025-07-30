@@ -51,5 +51,17 @@
             onDelete="CASCADE"/>
     </changeSet>
 
+    <changeSet id="point-view" author="lucas" dbms="postgresql">
+        
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <sql>
+            CREATE VIEW point_view AS 
+            select d.color, ST_SetSRID(ST_MakePoint(p.x_coordinate, p.y_coordinate),4326) as point from domain d inner join place p on p.domain_id = d.id;
+        </sql>
+    </changeSet>
+    
+
 
 </databaseChangeLog>

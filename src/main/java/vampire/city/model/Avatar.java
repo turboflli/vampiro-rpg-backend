@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "avatar")
 public class Avatar {
     @Id
-    private Long id;
+    private Integer id;
     private String hairColor;
     private String skinColor;
     private String accessory;
@@ -26,7 +26,7 @@ public class Avatar {
     public Avatar() {
     }
 
-    public Avatar(Long id, String hairColor, String skinColor, String accessory, String accessoryColor, String clotheColor, String clothing, String eyebrows, String top, String mouth, String facialHair, String eyeColor) {
+    public Avatar(Integer id, String hairColor, String skinColor, String accessory, String accessoryColor, String clotheColor, String clothing, String eyebrows, String top, String mouth, String facialHair, String eyeColor) {
         this.id = id;
         this.hairColor = hairColor;
         this.skinColor = skinColor;
@@ -41,11 +41,11 @@ public class Avatar {
         this.eyeColor = eyeColor;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

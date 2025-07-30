@@ -18,7 +18,11 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import vampire.city.service.DomainService;
+import vampire.city.service.PlaceService;
+import vampire.city.RabbitMQ.PlaceEvents;
+import vampire.city.RabbitMQ.PlaceProducer;
 import vampire.city.model.DomainDTO;
+import vampire.city.model.PlaceDTO;
 import vampire.city.model.User;
 import vampire.city.repositories.DomainRepository;
 import vampire.city.repositories.UserRepository;
@@ -32,7 +36,11 @@ public class DomainController {
     @Autowired
     private DomainRepository domainRepository;
     @Autowired
+    private PlaceService placeService;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired(required = false)
+    private PlaceProducer producer;
     
     @ApiOperation(value = "Endpoint Criar Domínio", notes = "Salva um domínio")
     @RequestMapping(value="/save", method= RequestMethod.POST,
@@ -54,6 +62,7 @@ public class DomainController {
             throw new IllegalArgumentException("Id do domínio não pode ser nulo");
         }
         DomainDTO domain = this.domainService.update(domainDTO);
+        this.sendDomainEvent(PlaceEvents.AFTER_UPDATE, domain.getId());
         return ResponseEntity.ok(domain);
     }
 
@@ -94,6 +103,7 @@ public class DomainController {
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do domínio a ser deletado") @PathVariable(value = "id") Integer id) {
+        this.sendDomainEvent(PlaceEvents.DELETE, id);
         this.domainRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
@@ -104,6 +114,17 @@ public class DomainController {
     @ResponseBody
     public ResponseEntity<List<Integer>> getCharacterIds() throws IllegalAccessException {
         return ResponseEntity.ok(this.domainService.getCharacterIds());
+    }
+
+    private void sendDomainEvent(PlaceEvents event, Integer domainId) {
+        try {
+            List<PlaceDTO> affectedPlaces = this.placeService.findByDomainId(domainId);
+            for (PlaceDTO placeDTO : affectedPlaces) {
+                this.producer.sendPlaceEvent(event, placeDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private User recoveryUser() throws IllegalAccessException {

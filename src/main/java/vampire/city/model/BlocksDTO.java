@@ -2,14 +2,14 @@ package vampire.city.model;
 
 import java.util.List;
 
-public class BlockDTO {
+public class BlocksDTO {
     public Integer id;
     public List<List<Integer>> coordinates;
     public String color;
 
-    public BlockDTO() {}
+    public BlocksDTO() {}
 
-    public BlockDTO(Integer id, List<List<Integer>> coordinates, String color) {
+    public BlocksDTO(Integer id, List<List<Integer>> coordinates, String color) {
         this.id = id;
         this.coordinates = coordinates;
         this.color = color;

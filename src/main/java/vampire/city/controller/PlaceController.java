@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import java.util.List;
 
 import vampire.city.service.PlaceService;
+import vampire.city.RabbitMQ.PlaceEvents;
+import vampire.city.RabbitMQ.PlaceProducer;
 import vampire.city.model.PlaceDTO;
 import vampire.city.model.User;
 import vampire.city.repositories.PlaceRepository;
@@ -33,6 +37,9 @@ public class PlaceController {
     private PlaceRepository placeRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired(required = false)
+    private PlaceProducer producer;
+    
     
     
     @ApiOperation(value = "Endpoint Criar Lugar", notes = "Salva um lugar")
@@ -43,6 +50,7 @@ public class PlaceController {
                                            @RequestBody PlaceDTO placeDTO) throws IllegalAccessException {
         User user = this.recoveryUser();
         PlaceDTO place = this.placeService.save(placeDTO, user);
+        this.sendPlaceEvent(PlaceEvents.CREATE, placeDTO);
         return ResponseEntity.ok(place);
     }
 
@@ -55,8 +63,11 @@ public class PlaceController {
         if (placeDTO.getId() == null) {
             throw new IllegalArgumentException("Id do lugar não pode ser nulo");
         }
+       PlaceDTO oldPlace = this.placeService.findById(placeDTO.getId());
+        this.sendPlaceEvent(PlaceEvents.BEFORE_UPDATE, oldPlace);
         User user = this.recoveryUser();
         PlaceDTO place = this.placeService.update(placeDTO, user);
+        this.sendPlaceEvent(PlaceEvents.AFTER_UPDATE, place);
         return ResponseEntity.ok(place);
     }
 
@@ -97,8 +108,18 @@ public class PlaceController {
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do lugar a ser deletado") @PathVariable(value = "id") Integer id) {
+        PlaceDTO placeDTO = this.placeService.findById(id);
         this.placeRepository.deleteById(id);
+        this.sendPlaceEvent(PlaceEvents.DELETE, placeDTO);
         return ResponseEntity.ok().build();
+    }
+
+    private void sendPlaceEvent(PlaceEvents event, PlaceDTO placeDTO) {
+        try {
+            this.producer.sendPlaceEvent(event, placeDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private User recoveryUser() throws IllegalAccessException {

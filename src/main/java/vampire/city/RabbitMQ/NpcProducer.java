@@ -15,7 +15,7 @@ public class NpcProducer {
     }
 
     public void sendNpcEvent(String message) {
-        rabbitTemplate.convertAndSend("npc-events", message);
+        rabbitTemplate.convertAndSend("","npc-events", message);
     }
 }
 

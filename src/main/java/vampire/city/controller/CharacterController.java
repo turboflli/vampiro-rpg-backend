@@ -15,7 +15,7 @@ import vampire.city.model.User;
 import vampire.city.repositories.CharacterRepository;
 import vampire.city.repositories.UserRepository;
 import vampire.city.service.CharacterService;
-
+import vampire.city.repositories.AvatarRepository;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -30,6 +30,8 @@ public class CharacterController {
     private UserRepository userRepository;
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private AvatarRepository avatarRepository;
 
     @Autowired(required = false)
     private NpcProducer producer;
@@ -106,6 +108,7 @@ public class CharacterController {
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do personagem a ser deletado") @PathVariable(value = "id") Integer id) {
+        this.avatarRepository.deleteById(id);
         this.characterRepository.deleteById(id);
         this.sendNpcEvent("Personagem deletado: " + id);
         return ResponseEntity.ok().build();

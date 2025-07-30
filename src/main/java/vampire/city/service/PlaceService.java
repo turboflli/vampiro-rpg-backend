@@ -1,7 +1,12 @@
 package vampire.city.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +28,8 @@ public class PlaceService {
     private PlaceMapper placeMapper;
     @Autowired
     private DomainRepository domainRepository;
+    @Autowired
+    private DataSource dataSource;
     
     public PlaceDTO save(PlaceDTO dto, User user) {
         Domain domain = null;
@@ -74,5 +81,41 @@ public class PlaceService {
         Place place = this.placeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Lugar nao encontrado"));
         return this.placeMapper.toDTO(place);
+    }
+
+    public void removeBlocksColor(float x_coordinate, float y_coordinate) {
+        String sql = "UPDATE blocks SET color = '#777777' WHERE ST_Contains(shape, ST_SetSRID(ST_MakePoint(?, ?), 4326))";
+    try (
+        Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)
+    ) {
+        pstmt.setFloat(1, x_coordinate);
+        pstmt.setFloat(2, y_coordinate);
+        int rows = pstmt.executeUpdate();
+        System.out.println("Blocos atualizados: " + rows);
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao atualizar cor dos blocos", e);
+    }
+    }
+
+    public void fillBlocksColor(PlaceDTO placeDTO) {
+        if (placeDTO.getDomainId() != null){
+            Domain domain = this.domainRepository.findById(placeDTO.getDomainId())
+                .orElseThrow(() -> new IllegalArgumentException("Dominio nao encontrado"));
+            String color = domain.getColor();
+            String sql = "UPDATE blocks SET color = ? WHERE ST_Contains(shape, ST_SetSRID(ST_MakePoint(?, ?), 4326))";
+            try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)
+            ) {
+                pstmt.setString(1, color);
+                pstmt.setFloat(2, placeDTO.getX_coordinate());
+                pstmt.setFloat(3, placeDTO.getY_coordinate());
+                int rows = pstmt.executeUpdate();
+                System.out.println("Blocos atualizados: " + rows);
+            } catch (SQLException e) {
+                throw new RuntimeException("Erro ao atualizar cor dos blocos", e);
+            }
+        }
     }
 }
