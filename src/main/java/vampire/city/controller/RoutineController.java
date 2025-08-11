@@ -18,6 +18,7 @@ import java.util.List;
 
 import vampire.city.service.RoutineService;
 import vampire.city.model.RoutineDTO;
+import vampire.city.model.RoutineExibitionDTO;
 import vampire.city.repositories.RoutineRepository;
 
 @RestController
@@ -52,11 +53,18 @@ public class RoutineController {
         return ResponseEntity.ok(routine);
     }
 
+    @ApiOperation(value = "Endpoint Recuperar Rotina", notes = "Recupera uma rotina")
+    @RequestMapping(value="/find/{id}", method=RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<RoutineDTO> getById(@ApiParam(name = "id", example = "2", value = "Id da rotina a ser consultada") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
+        return ResponseEntity.ok(this.routineService.findById(id));
+    }
+
     @ApiOperation(value = "Endpoint Recuperar Rotinas por personagem", notes = "Recupera todas as rotinas de um personagem")
     @RequestMapping(value="/character/{characterId}", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<RoutineDTO>> getRoutinesByCharacter(@ApiParam(name = "characterId", example = "1", value = "Id do personagem para buscar") @PathVariable(value = "characterId") Integer characterId) throws IllegalAccessException {
+    public ResponseEntity<List<RoutineExibitionDTO>> getRoutinesByCharacter(@ApiParam(name = "characterId", example = "1", value = "Id do personagem para buscar") @PathVariable(value = "characterId") Integer characterId) throws IllegalAccessException {
         return ResponseEntity.ok(this.routineService.findByCharacter(characterId));
     }
 
@@ -64,7 +72,7 @@ public class RoutineController {
     @RequestMapping(value="/place/{placeId}", method= RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<RoutineDTO>> getRoutinesByPlace(@ApiParam(name = "placeId", example = "1", value = "Id do lugar para buscar") @PathVariable(value = "placeId") Integer placeId) throws IllegalAccessException {
+    public ResponseEntity<List<RoutineExibitionDTO>> getRoutinesByPlace(@ApiParam(name = "placeId", example = "1", value = "Id do lugar para buscar") @PathVariable(value = "placeId") Integer placeId) throws IllegalAccessException {
         return ResponseEntity.ok(this.routineService.findByPlace(placeId));
     }
 

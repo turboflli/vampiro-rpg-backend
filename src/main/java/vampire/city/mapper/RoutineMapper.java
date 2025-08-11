@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import vampire.city.model.Place;
 import vampire.city.model.Routine;
 import vampire.city.model.RoutineDTO;
+import vampire.city.model.RoutineExibitionDTO;
 import vampire.city.model.Character;
 @Component
 public class RoutineMapper {
@@ -26,5 +27,9 @@ public class RoutineMapper {
         routine.setEndTime(endTime);
         routine.setDescription(dto.getDescription());
         return routine;
+    }
+
+    public RoutineExibitionDTO toExibitionDTO(Routine routine) {
+        return new RoutineExibitionDTO(routine.getId(), routine.getCharacter().getId(), routine.getPlace().getId(), routine.getWeekday(), routine.getStartTime().toString(), routine.getEndTime().toString(), routine.getDescription(), routine.getCharacter().getName(), routine.getPlace().getName());
     }
 }

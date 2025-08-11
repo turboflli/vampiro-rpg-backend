@@ -51,7 +51,7 @@ public class AvatarController {
     @ApiOperation(value = "Endpoint Recuperar Avatar", notes = "Recupera um avatar")
     @RequestMapping(value="/find/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Avatar> getById(@ApiParam(name = "id", example = "2", value = "Id do avatar a ser consultado") @PathVariable(value = "id") Long id) {
+    public ResponseEntity<Avatar> getById(@ApiParam(name = "id", example = "2", value = "Id do avatar a ser consultado") @PathVariable(value = "id") Integer id) {
         return ResponseEntity.ok(this.avatarRepository.findById(id).get());
     }
 }

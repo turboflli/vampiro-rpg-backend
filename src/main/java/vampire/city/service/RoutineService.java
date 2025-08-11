@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import vampire.city.mapper.RoutineMapper;
 import vampire.city.model.Routine;
 import vampire.city.model.RoutineDTO;
+import vampire.city.model.RoutineExibitionDTO;
 import vampire.city.repositories.RoutineRepository;
 import vampire.city.repositories.CharacterRepository;
 import vampire.city.repositories.PlaceRepository;
@@ -32,7 +33,8 @@ public class RoutineService {
         Place place = placeRepository.findById(dto.getPlaceId())
                 .orElseThrow(() -> new IllegalArgumentException("Lugar nao encontrado"));
         Routine routine = routineMapper.fromDTO(dto, character, place);
-        return routineMapper.toDTO(routineRepository.save(routine));
+        routine = routineRepository.save(routine);
+        return routineMapper.toDTO(routine);
     }
 
     public RoutineDTO update(RoutineDTO dto) {
@@ -45,22 +47,29 @@ public class RoutineService {
                 .orElseThrow(() -> new IllegalArgumentException("Lugar nao encontrado"));
         Routine routine = routineMapper.fromDTO(dto, character, place);
         routine.setId(dto.getId());
-        return routineMapper.toDTO(routineRepository.save(routine));
+        routine = routineRepository.save(routine);
+        return routineMapper.toDTO(routine);
     }
 
-    public List<RoutineDTO> findByCharacter(Integer characterId){
+    public List<RoutineExibitionDTO> findByCharacter(Integer characterId){
         Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new IllegalArgumentException("Personagem nao encontrado"));
         List<Routine> routines = this.routineRepository.findByCharacter(character);
-        return routines.stream().map(r -> this.routineMapper.toDTO(r))
+        return routines.stream().map(r -> this.routineMapper.toExibitionDTO(r))
                 .collect(Collectors.toList());
     }
     
-    public List<RoutineDTO> findByPlace(Integer placeId){
+    public List<RoutineExibitionDTO> findByPlace(Integer placeId){
         Place place = placeRepository.findById(placeId)
                 .orElseThrow(() -> new IllegalArgumentException("Lugar nao encontrado"));
         List<Routine> routines = this.routineRepository.findByPlace(place);
-        return routines.stream().map(r -> this.routineMapper.toDTO(r))
+        return routines.stream().map(r -> this.routineMapper.toExibitionDTO(r))
                 .collect(Collectors.toList());
+    }
+
+    public RoutineDTO findById(Integer id) {
+        Routine routine = this.routineRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Rotina nao encontrada"));
+        return this.routineMapper.toDTO(routine);
     }
 }
