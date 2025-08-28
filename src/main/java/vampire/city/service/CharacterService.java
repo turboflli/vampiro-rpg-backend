@@ -2,6 +2,8 @@ package vampire.city.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import vampire.city.RoutineProperties;
 import vampire.city.mapper.CharacterMapper;
 import vampire.city.model.*;
 import vampire.city.model.Character;
@@ -26,6 +28,8 @@ public class CharacterService {
     private CharacterRepository characterRepository;
     @Autowired
     private CharacterMapper characterMapper;
+    @Autowired
+    private RoutineProperties routineProperties;
 
     public CharacterDTO save(CharacterDTO dto, User user) {
         Character character = fromDTO(dto, user);

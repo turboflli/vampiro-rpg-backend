@@ -22,6 +22,8 @@ import java.util.List;
 import vampire.city.service.PlaceService;
 import vampire.city.RabbitMQ.PlaceEvents;
 import vampire.city.RabbitMQ.PlaceProducer;
+import vampire.city.RabbitMQ.CharacterEvents;
+import vampire.city.RabbitMQ.NpcProducer;
 import vampire.city.model.PlaceDTO;
 import vampire.city.model.User;
 import vampire.city.repositories.PlaceRepository;
@@ -39,6 +41,8 @@ public class PlaceController {
     private UserRepository userRepository;
     @Autowired(required = false)
     private PlaceProducer producer;
+    @Autowired(required = false)
+    private NpcProducer npcProducer;
     
     
     
@@ -51,6 +55,7 @@ public class PlaceController {
         User user = this.recoveryUser();
         PlaceDTO place = this.placeService.save(placeDTO, user);
         this.sendPlaceEvent(PlaceEvents.CREATE, placeDTO);
+        this.sendNpcEvent(CharacterEvents.CREATE_PLACE, placeDTO.getId());
         return ResponseEntity.ok(place);
     }
 
@@ -68,12 +73,13 @@ public class PlaceController {
         User user = this.recoveryUser();
         PlaceDTO place = this.placeService.update(placeDTO, user);
         this.sendPlaceEvent(PlaceEvents.AFTER_UPDATE, place);
+        this.sendNpcEvent(CharacterEvents.AFTER_UPDATE_PLACE, placeDTO.getId());
         return ResponseEntity.ok(place);
     }
 
     @ApiOperation(value = "Endpoint Recuperar Lugar", notes = "Recupera todos os lugares do usuário")
     @RequestMapping(value="/all", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<PlaceDTO>> getAllPlaces() throws IllegalAccessException {
         User user = this.recoveryUser();
@@ -82,7 +88,7 @@ public class PlaceController {
 
     @ApiOperation(value = "Endpoint Recuperar Lugar por id", notes = "Recupera um lugar pelo id")
     @RequestMapping(value="/find/{id}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<PlaceDTO> getPlaceById(@ApiParam(name = "id", example = "1", value = "Id do lugar") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
         return ResponseEntity.ok(this.placeService.findById(id));
@@ -90,7 +96,7 @@ public class PlaceController {
 
     @ApiOperation(value = "Endpoint Recuperar Lugar por domainId", notes = "Recupera todos os lugares do dominio")
     @RequestMapping(value="/domain/{domainId}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<PlaceDTO>> getPlacesByDomainId(@ApiParam(name = "domainId", example = "1", value = "Id do dominio") @PathVariable(value = "domainId") Integer domainId) throws IllegalAccessException {
         return ResponseEntity.ok(this.placeService.findByDomainId(domainId));
@@ -98,7 +104,7 @@ public class PlaceController {
 
     @ApiOperation(value = "Endpoint Recuperar Lugar por nome", notes = "Recupera todos os lugares com o nome contendo o texto digitado")
     @RequestMapping(value="/findByName/{name}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<PlaceDTO>> getPlacesByName(@ApiParam(name = "name", example = "Nome", value = "Nome do lugar para buscar") @PathVariable(value = "name") String name) throws IllegalAccessException {
         return ResponseEntity.ok(this.placeService.findByName(name));
@@ -117,6 +123,14 @@ public class PlaceController {
     private void sendPlaceEvent(PlaceEvents event, PlaceDTO placeDTO) {
         try {
             this.producer.sendPlaceEvent(event, placeDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendNpcEvent(CharacterEvents event, Integer id) {
+        try {
+            this.npcProducer.sendNpcEvent(event, id);
         } catch (Exception e) {
             e.printStackTrace();
         }

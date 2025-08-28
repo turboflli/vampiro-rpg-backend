@@ -26,7 +26,7 @@ public class ExtraController {
 
     @ApiOperation(value = "Endpoint Recuperar Clans", notes = "Recupera todos os clans")
     @RequestMapping(value="/clans", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Clan>> getAllClans(){
         List<Clan> clans = new ArrayList<>();
@@ -36,7 +36,7 @@ public class ExtraController {
 
     @ApiOperation(value = "Endpoint Recuperar Clans por nome", notes = "Recupera os clans que tenham parte do nome digitado")
     @RequestMapping(value="/clans/{name}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Clan>> getClansByName(@ApiParam(name = "name", example = "Tzim", value = "parte do nome do clan para buscar") @PathVariable(value = "name") String name){
         return ResponseEntity.ok(this.clanRepository.findByNameContainingIgnoreCase(name));
@@ -44,7 +44,7 @@ public class ExtraController {
 
     @ApiOperation(value = "Endpoint Recuperar Roads", notes = "Recupera as roads, todas ou as que tenham parte do nome digitado, seja nome ou o nome do path")
     @RequestMapping(value="/roads", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Road>> getRoadByName(@ApiParam(name = "name", example = "Caeli", value = "parte do nome da road para buscar") @RequestParam(value = "name", required = false) String name,
                                                     @ApiParam(name = "pathName", example = "Céu", value = "parte do nome do path que a road inclui para buscar") @RequestParam(value = "pathName", required = false) String pathName){

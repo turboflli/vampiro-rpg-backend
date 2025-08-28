@@ -51,7 +51,7 @@ public class BlocksController {
 
     @ApiOperation(value = "Endpoint Recuperar Blocos", notes = "Recupera todos os blocos do usuário")
     @RequestMapping(value="/all", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<BlocksDTO>> findByUser() throws IllegalAccessException {
         User user = this.recoveryUser();

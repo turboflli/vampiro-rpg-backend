@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import vampire.city.RabbitMQ.CharacterEvents;
 import vampire.city.RabbitMQ.NpcProducer;
 import vampire.city.model.CharacterDTO;
 import vampire.city.model.CharacterSummaryDTO;
@@ -16,7 +17,6 @@ import vampire.city.repositories.CharacterRepository;
 import vampire.city.repositories.UserRepository;
 import vampire.city.service.CharacterService;
 import vampire.city.repositories.AvatarRepository;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -44,7 +44,7 @@ public class CharacterController {
                                                @RequestBody CharacterDTO characterdto) throws IllegalAccessException {
         User user = this.recoveryUser();
         CharacterDTO character = this.characterService.save(characterdto, user);
-        this.sendNpcEvent("Personagem criado: " + characterdto.getName());
+        this.sendNpcEvent(CharacterEvents.CREATE, character.getId());
         return ResponseEntity.ok(character);
     }
 
@@ -59,13 +59,13 @@ public class CharacterController {
         }
         User user = this.recoveryUser();
         CharacterDTO character = this.characterService.update(characterdto, user);
-        this.sendNpcEvent("Personagem atualizado: " + characterdto.getName());
+        this.sendNpcEvent(CharacterEvents.AFTER_UPDATE, character.getId());
         return ResponseEntity.ok(character);
     }
 
     @ApiOperation(value = "Endpoint Recuperar Personagem", notes = "Recupera todos os personagens do usuário")
     @RequestMapping(value="/all", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<CharacterDTO>> getAll() throws IllegalAccessException {
         User user = this.recoveryUser();
@@ -74,7 +74,7 @@ public class CharacterController {
 
     @ApiOperation(value = "Endpoint Recuperar Resumo dos Personagem", notes = "Recupera apenas nome, clã, caminho e geração dos personagens do usuário")
     @RequestMapping(value="/summary", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<CharacterSummaryDTO>> getAllSummary() throws IllegalAccessException {
         User user = this.recoveryUser();
@@ -83,7 +83,7 @@ public class CharacterController {
 
     @ApiOperation(value = "Endpoint Recuperar Resumo de um Personagem", notes = "Recupera apenas nome, clã, caminho e geração de um personagem")
     @RequestMapping(value="/summary/{id}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<CharacterSummaryDTO> getSummaryById(@ApiParam(name = "id", example = "2", value = "Id do personasgem a ser consultado") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
         return ResponseEntity.ok(this.characterService.findSummaryCharacter(id));
@@ -110,13 +110,12 @@ public class CharacterController {
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id do personagem a ser deletado") @PathVariable(value = "id") Integer id) {
         this.avatarRepository.deleteById(id);
         this.characterRepository.deleteById(id);
-        this.sendNpcEvent("Personagem deletado: " + id);
         return ResponseEntity.ok().build();
     }
 
-    private void sendNpcEvent(String message) {
+    private void sendNpcEvent(CharacterEvents event, Integer id) {
         try {
-            this.producer.sendNpcEvent(message);
+            this.producer.sendNpcEvent(event, id);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package vampire.city.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import vampire.city.service.RoutineService;
 import vampire.city.model.RoutineDTO;
 import vampire.city.model.RoutineExibitionDTO;
 import vampire.city.repositories.RoutineRepository;
+import vampire.city.RoutineProperties;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,6 +31,10 @@ public class RoutineController {
     private RoutineService routineService;
     @Autowired
     private RoutineRepository routineRepository;
+    @Autowired
+    private RoutineProperties routineProperties;
+
+    
     
     @ApiOperation(value = "Endpoint Criar Rotina", notes = "Salva uma rotina")
     @RequestMapping(value="/save", method= RequestMethod.POST,
@@ -54,7 +60,8 @@ public class RoutineController {
     }
 
     @ApiOperation(value = "Endpoint Recuperar Rotina", notes = "Recupera uma rotina")
-    @RequestMapping(value="/find/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/find/{id}", method=RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<RoutineDTO> getById(@ApiParam(name = "id", example = "2", value = "Id da rotina a ser consultada") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
         return ResponseEntity.ok(this.routineService.findById(id));
@@ -62,7 +69,7 @@ public class RoutineController {
 
     @ApiOperation(value = "Endpoint Recuperar Rotinas por personagem", notes = "Recupera todas as rotinas de um personagem")
     @RequestMapping(value="/character/{characterId}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<RoutineExibitionDTO>> getRoutinesByCharacter(@ApiParam(name = "characterId", example = "1", value = "Id do personagem para buscar") @PathVariable(value = "characterId") Integer characterId) throws IllegalAccessException {
         return ResponseEntity.ok(this.routineService.findByCharacter(characterId));
@@ -70,10 +77,18 @@ public class RoutineController {
 
     @ApiOperation(value = "Endpoint Recuperar Rotinas por lugar", notes = "Recupera todas as rotinas de um lugar")
     @RequestMapping(value="/place/{placeId}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<RoutineExibitionDTO>> getRoutinesByPlace(@ApiParam(name = "placeId", example = "1", value = "Id do lugar para buscar") @PathVariable(value = "placeId") Integer placeId) throws IllegalAccessException {
         return ResponseEntity.ok(this.routineService.findByPlace(placeId));
+    }
+
+    @ApiOperation(value = "Endpoint Recuperar rotinas para um dia da semana", notes = "Recupera todas as rotinas de um dia da semana")
+    @RequestMapping(value="/day/{day}", method= RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<RoutineExibitionDTO>> getRoutinesByDay(@ApiParam(name = "day", example = "1", value = "Dia da semana para buscar") @PathVariable(value = "day") Integer day) throws IllegalAccessException {
+        return ResponseEntity.ok(this.routineService.findByWeekday(day));
     }
 
     @ApiOperation(value = "Endpoint deletar Rotina", notes = "Deleta uma rotina já existente.")
@@ -82,5 +97,13 @@ public class RoutineController {
     public ResponseEntity<?> delete(@ApiParam(name = "id", example = "2", value = "Id da rotina a ser deletada") @PathVariable(value = "id") Integer id) {
         this.routineRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Endpoint recuperar palavras chaves do local", notes = "Recupera todas as palavras chaves para considerar um local como habitado")
+    @RequestMapping(value="/keywords", method= RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<String>> getKeywordsByPlace() {
+        return ResponseEntity.ok(this.routineProperties.getKeywords());
     }
 }

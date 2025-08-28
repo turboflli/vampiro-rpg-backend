@@ -68,7 +68,7 @@ public class DomainController {
 
     @ApiOperation(value = "Endpoint Recuperar Domínios", notes = "Recupera todos os domínios do usuário")
     @RequestMapping(value="/all", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<DomainDTO>> getAllDomains() throws IllegalAccessException {
         User user = this.recoveryUser();
@@ -77,7 +77,7 @@ public class DomainController {
 
     @ApiOperation(value = "Endpoint Recuperar Domínio por nome", notes = "Recupera todos os domínios com o nome contendo o texto digitado")
     @RequestMapping(value="/findByname/{name}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<DomainDTO>> getDomainsByName(@ApiParam(name = "name", example = "Nome", value = "Nome do domínio para buscar") @PathVariable(value = "name") String name) throws IllegalAccessException {
         return ResponseEntity.ok(this.domainService.findByName(name));
@@ -85,7 +85,7 @@ public class DomainController {
 
     @ApiOperation(value = "Endpoint Recuperar Domínio por id", notes = "Recupera o domínio pelo id")
     @RequestMapping(value="/find/{id}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<DomainDTO> getDomainsByName(@ApiParam(name = "id", example = "1", value = "id do domínio para buscar") @PathVariable(value = "id") Integer id) throws IllegalAccessException {
         return ResponseEntity.ok(this.domainService.findById(id));
@@ -93,7 +93,7 @@ public class DomainController {
 
     @ApiOperation(value = "Endpoint Recuperar Domínio por personagem", notes = "Recupera todos os domínios de um personagem")
     @RequestMapping(value="/character/{characterId}", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<DomainDTO>> getDomainsByCharacterId(@ApiParam(name = "characterId", example = "1", value = "Id do personagem para buscar") @PathVariable(value = "characterId") Integer characterId) throws IllegalAccessException {
         return ResponseEntity.ok(this.domainService.findByCharacterId(characterId));
@@ -110,7 +110,7 @@ public class DomainController {
 
     @ApiOperation(value = "Endpoint para buscar todos os ids de personagem com dominios")
     @RequestMapping(value="/characterIds", method= RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Integer>> getCharacterIds() throws IllegalAccessException {
         return ResponseEntity.ok(this.domainService.getCharacterIds());

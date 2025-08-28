@@ -13,4 +13,6 @@ public interface RoutineRepository extends JpaRepository<Routine, Integer> {
     List<Routine> findByCharacter(Character character);
 
     List<Routine> findByPlace(Place place);
+
+    List<Routine> findByWeekday(Integer day);
 }
